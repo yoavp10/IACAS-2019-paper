@@ -156,50 +156,48 @@ Another thing to notice is that one can modify the density function, which will 
 %\textcolor{red}{(what is missing in this section is the idea that this is a cooperative/distributed calculation, and neighbors share information - this is important!)}
 
 \section{Problem Formulation}
-Let us consider an area $A \subset \rsqr$ that we aim to cover with a number of mobile sensors. % will utilize many tools from various fields to achieve coverage over area $A \subset \rsqr$, under area and formation constraints. 
-%The solution will be based on configurations (which are like the concept of frameworks). Given a set of sensors $S = \left\{s_1 \ldots s_n\right\}$ located in positions $p_i \in \mathbb{R}^2$ (for $i=1,\ldots,n$) at time $t$, a configuration $c(t)$ is stacking the sensor positions,
-%\begin{equation}
-%c\left(t\right) = \bmat{
-%p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}.
-%\end{equation}
-%Each sensor $i$ has a coverage radius $R$ (assuming all sensors are identical), so it can cover a disk $D\left(p_{i}\left(t\right), R\right)\subset \rsqr$, centred at $p_{i}\left(t\right)$, 
-%\begin{equation}
-%D\left(p_{i}\left(t\right),R\right) = D_{i}\left(t\right) = \{x\in\rsqr \mid\norm{x - p_{i}\left(t\right)}_{2} \leq R\}.
-%\end{equation}
-%The set of all possible configurations is defined as $\mathtt{C_{a}} = \left\{\conp{i}\right\} \in \mathbb{R}^{2r}$.
-%Where $c_{i}(t)$ is the $i$-th configuration of the configurations set, and the total area that the $i$-th configuration can cover is %$A_{cov}(c_{i}(t))\subset \rsqr$,
-%\begin{equation}\label{configuration set coverage}
-%A_{cov}\left(c_{i}(t)\right) = \cup{_i}D_{i}\left(t\right)\subset \rsqr.
-%\end{equation}
-%Each configuration can be formed under some constraint. The constraints that will be dealt in this research are:
-%We also define a \emph{Coverage Constraint}: A given area inside the area $A_{m} \subset A$ must be covered always (e.g. ground station). This condition, named \emph{Area Constraint Condition}, defines a set of possible configurations $\mathtt{C_{acc}} =  \left\{ \conp{i} \mid  A_{m} \subset A_{cov}\left(\conp{i}\right)  \right\}$.
+Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \mathbb{N}$ \emph{mobile} sensors. Those sensors are defined as the set $S = \{s_1, \ldots, s_n\}$ located at positions $P(t) = \{ p_i (t) \in \rsqr \mid i = 1,\; \ldots ,\; n\}$:
+\begin{itemize}
+\item The mobile sensors are modelled using integrator dynamics $\dot{p_i}(t)=u$.
+\item Each sensor can cover an area described by the abstract set $C_i \left( p_i(t) \right) \subset \rsqr$.
+\end{itemize}
 
-Let us have a set of sensors $S = \left\{s_1 \ldots s_n\right\}$ located in positions $p_i \in \mathbb{R}^2$ (for $i=1,\ldots,n$) at time $t$. Each sensor $i$ has a coverage radius $R$ (assuming all sensors are identical), and can cover a disk $D\left(p_{i}\left(t\right), R\right)\subset \rsqr$, centred at $p_{i}\left(t\right)$, 
-\begin{equation}
-D\left(p_{i}\left(t\right),R\right) = D_{i}\left(t\right) = \{x\in\rsqr \mid\norm{x - p_{i}\left(t\right)}_{2} \leq R\}.
-\end{equation}
-We also assume that $D_{i}\left( t \right) < A$. Let us also define a \emph{Coverage Constraint}: A given area inside the area $A_{m} \subset A$ must be covered always (e.g. ground station). This condition will be named \emph{Area Constraint Condition}.
-We also define a \emph{configuration}: A configuration $c$ at time $t$ is the stack of the sensor positions at time $t$,
-\begin{equation}
+\subsection{Configuration}
+A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$:
+\begin{equation*}
 c\left(t\right) = \bmat{
-p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}.
-\end{equation}
+p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}
+\end{equation*}
+Thus the coverage of a configuration:
+\begin{equation*}
+D\left( c\left( t \right) \right) = \cap C_i(p_i(t))
+\end{equation*}
+Let us consider a sub-area of $A,\; A_m \subset A$ which must be partially covered (e.g. ground station).
 
-Since $D_{i}\left( t \right) < A$, there is no one configuration that can cover the entire area $A$ at once, and we also have to take $A_m$ into account. Therefore, our goal is to find the set of configuration $\texttt{C}$ which contains configurations that all together provide full coverage of the area $A$, and yet maintains the coverage of $A_m$.
+\begin{assumption}
+$D\left( c\left( t \right) \right) \subset A$ - a single configuration \emph{can't} provide full coverage!
+\end{assumption}
 
+\subsection{Partition}
+The partition of $A \in \rsqr$, $PR(A)$, is a finite set built from $n$ subset $pr_i \subset \rsqr,\; i=1,\; \ldots,\; n$ such that:
+\begin{itemize}
+\item $pr_i \cap pr_j = \emptyset \; \forall i \neq j$.
+\item $\cup pr_i = A$.
+\end{itemize}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{figures/problem-def/partitioning.png}
+\caption{An example of a partition of some area $PR(A)$}
+\end{figure}
+
+\subsection{Problem Definition}
 \begin{problem} \label{GeneralProblem}
-Find the set $\texttt{C} = \bmat{
-c_{1}^{T}\left(t_1\right)&\cdots&c_{n}^{T}\left(t_n\right)}^{T}$ that provide coverage at time $i$ to some area $A_c \left( t_i \right)$, such that:
 \begin{enumerate}
-\item after time $n$, each point of $A$ was visited at least once,
-\item At each time there was coverage to some area $A_sm \subset A_m$.
+\item Find a partition $PR(A)$ such that each subset $pr_i \in PR(A), \; pr_i \cap A_m \neq \emptyset$
+\item Find a deployment controller, such that $$ pr_i \subseteq \lim_{t\rightarrow \infty}D(c(t)),\text{for }i=1,\ldots,n.$$
 \end{enumerate}
 \end{problem}
-
-%\textcolor{red}{(you have not actually clearly stated what the problem is!  And I think we should be very clear what we are doing - we have a 2-step process here, each one should be defined as a separate problem)
-%\begin{problem}
-%PROBLEM STATEMENT IN HERE
-%\end{problem}}
 
 \section{Proposed Solution}
 Assuming that there are no constraints at all, we propose an algorithm to solve the problem mentioned above:

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20181220223359" modified="D:20181220223359"/>
+<info created="D:20181220190152" modified="D:20181220224024"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -254,38 +254,21 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black">
-128 768 m
-192 800 l
-256 800 l
-288 768 l
-256 736 l
-192 720 l
-128 736 l
-128 768 l
-128 768 l
-h
+<path layer="alpha" fill="red">
+35.7771 0 0 35.7771 192 640 e
 </path>
-<path stroke="black">
-160 784 m
-176 736 l
-192 720 l
-192 720 l
+<use name="mark/disk(sx)" pos="192 640" size="normal" stroke="blue"/>
+<text matrix="1 0 0 1 -29.4107 -29.0606" transformations="translations" pos="272 688" stroke="black" type="label" width="7.987" height="4.294" depth="1.49" valign="baseline" style="math">s_i</text>
+<text matrix="1 0 0 1 4.20153 -37.602" transformations="translations" pos="128 720" stroke="black" type="label" width="43.397" height="7.473" depth="2.49" valign="baseline" style="math">C_i \left(p_i(t)) \right)</text>
+<path matrix="0.569179 0 0 0.552571 83.2267 280.421" stroke="black" rarrow="normal/normal">
+160 688 m
+128 720 l
+128 720 l
 </path>
-<path stroke="black">
-256 800 m
-192 768 l
-176 736 l
-176 736 l
+<path matrix="0.57603 0 0 0.335365 84.4438 427.233" stroke="black" rarrow="normal/normal">
+199.174 642.809 m
+267.61 685.316 l
+267.61 685.316 l
 </path>
-<path stroke="black">
-256 736 m
-192 768 l
-192 768 l
-</path>
-<text transformations="translations" pos="144 752" stroke="black" type="label" width="9.482" height="4.297" depth="1.93" valign="baseline" style="math">p_1</text>
-<text matrix="1 0 0 1 9.23679 -2.22957" transformations="translations" pos="176 784" stroke="black" type="label" width="9.482" height="4.297" depth="1.93" valign="baseline" style="math">p_2</text>
-<text transformations="translations" pos="240 768" stroke="black" type="label" width="9.482" height="4.297" depth="1.93" valign="baseline" style="math">p_3</text>
-<text matrix="1 0 0 1 3.1851 5.09616" transformations="translations" pos="192 736" stroke="black" type="label" width="9.482" height="4.297" depth="1.93" valign="baseline" style="math">p_4</text>
 </page>
 </ipe>

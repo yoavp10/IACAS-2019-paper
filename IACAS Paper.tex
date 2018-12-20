@@ -79,26 +79,92 @@
 \maketitle
 
 \begin{abstract}
-This work presents a new approach for a coverage problem for large areas and a limited number of sensors. We consider the problem where there are not enough sensors to provide complete coverage of the designated area at once, and therefore the sensors should coordinate their coverage in a sequential manner.  Furthermore, we require that at each stage of coverage, a sub-region in the area is constantly monitored. Our solution approach is a combination of two algorithms, the first one is Lloyd's algorithm, which is well known and used in this field, and the second one is a modified Lloyd's algorithm that we term the \emph{projected Lloyd's Algorithm}. We demonstrate our results with numerical simulations.
-%\textcolor{red}{One paragraph abstract summarizing work required here}
+This work presents a new approach for a coverage problem for large areas and a limited number of sensors. We consider the problem where there are not enough sensors to provide complete coverage of the designated area at once, and therefore the sensors should coordinate their coverage in a sequential manner.  Furthermore, we require that at each stage of coverage, a sub-region in the area is constantly monitored. Our solution approach is a combination of two algorithms, the first one is Lloyd's algorithm, which is well known and used in this field, and the second one is a modified Lloyd's algorithm that we term the \emph{projected Lloyd's Algorithm}. Lastly, we combine Lloyd's algorithm (and its projected version) with a distance based formation controller. We demonstrate our results with numerical simulations.
 \end{abstract}
 
 \section{Introduction}
-The mission of monitoring some area using sensors is widely spread in various fields - it can be used for photographing a large area, receiving or sending electromagnetic signals, tracking targets, or even for designing an algorithm for a robotic vacuum cleaner \cite{Nigam2012, 7798796, 7798244}.
-%
-This research area is known in the scientific community as the \emph{coverage control} problem \cite{Cassandras2005}. Sensor coverage can be generally described as the reflection of how well a given range (for example, area) is monitored by sensors. This field is well explored in the scientific community, especially in the recent years when the fields of distributed algorithms and cooperative systems were developed.
 
-When coverage is required for large areas, and specifically when a single sensor cannot provide full coverage of that area, the idea of using a \emph{formation} of mobile sensors is presented \cite{Hokayem2007}. The main advantage of using a formation is the ability to perform a task in a distributed way, which leads to cheaper sensors, objective flexibility, and survivability (the system can function even if one of the sensors is broken) \cite{Cortes2004}.
+The mission of monitoring some range (for example, area) using sensors is widely spread in various fields - it can be used for photographing a large area, receiving or sending electromagnetic signals, tracking targets, or even for designing an algorithm for a robotic vacuum cleaner \cite{Nigam2012, 7798796, 7798244}.
+%
+This research area is known in the scientific community as the \emph{coverage control} problem \cite{Cassandras2005}. Sensor coverage can be generally described as the reflection of how well a given range is monitored by sensors. This field is well explored in the scientific community, especially in the recent years when the fields of distributed algorithms and cooperative systems were developed.
 
 A concept that repeats in many researches is finding a set of trajectories (at least one route for every sensor), allowing the mobile sensors to achieve the required coverage goal.  For example, when trying to cover an area using two mobile sensors, the algorithm will define a trajectory for each sensor such that the whole area will be covered \cite{Atinc2013,Hussein2007}.
 Another idea that appears in most of the relevant literature is the use of Voronoi diagrams for optimizing the sensor location \cite{Cortes2004,Hussein2007}. 
 
-To the best of out knowledge, there isn't any solution that tries to deal with the coverage problem in the scenario where, on the one hand, an operator has to maintain coverage of a specific part of the area, and on the other hand, have a set of formations that all together provides a complete coverage of the area. In this research, we developed a new coverage algorithm that deals with this problem. The operator can switch formations on different parts of the area and get a static coverage on some part of the whole area. For this algorithm, we defined a coverage constraint, that defines an area that at least one agent has to be present in at all steady-state times. This constraint represent, for example, an agent that must be within the home-station coverage radius. 
+When coverage is required for large areas, and specifically when a single sensor cannot provide full coverage of that area, the idea of using a \emph{deployment} of mobile sensors is presented \cite{Cassandras2005, Cortes2004}. In \cite{Cassandras2005}, the problem is formed using a probabilistic network model and some density function, to model evens. Then, an optimization algorithm is proposed to find the optimal deployment such that maximum coverage is obtained with minimal communications cost. On \cite{Cortes2004}, Cortes \textit{et al.} propose an optimization algorithm for maximal coverage using Centroidal Voronoi Tessellations \cite{Du1999}. The former concept will be utilized and modified in this paper to achieve new coverage capabilities that will be further described.
 
-%\textcolor{red}{(summary of the work/contribution should be more clearly motivated, stated, and explained in intro)}
+In this work, we formulate the coverage problem from another angle. We firstly assume that the given range can be at most \emph{partially} covered, however we also define some sub-range that must be at least partially covered at all times (for example, surveillance or home-base communications constraint). We present an algorithm for partitioning this range into tiles, such that each tile intersects with this sub-range constraint, and then, utilizing \cite{Cortes2004} method to achieve coverage of this tile. This method has two main benefits - first, we can achieve full coverage if we \emph{sequentially} moving the agents from tile to tile, and second - the operator can return the agents to any tile whenever he desires to.
 
-%\textcolor{red}{(include brief outline (in text) of the paper layout)}
-Following this chapter, this extended abstract will include a brief background about Voronoi Diagrams and general coverage algorithms. After it, the problem will be formally formulated, and later a solution will be introduced.
+There are some cases where maintaining spatial properties is important. One example is when the communications between the sensors are limited to some range. Another example is when the spatial shape is critical for the mission, as in geolocation missions. A well known solution for this problem is the distance-based formation control \cite{Krick2008, Kwang-KyoOh2011}. 
+\br
+
+Following this chapter, the problem will be formally defined. Then, mathematical background on the main concepts of this paper will be given, followed by the solution algorithms and control strategies. Finally, numerical simulations will be shown.
+
+\section{Problem Formulation}
+Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \mathbb{N}$ \emph{mobile} sensors. Those sensors are defined as the set $S = \{s_1, \ldots, s_n\}$ located at positions $P(t) = \{ p_i (t) \in \rsqr \mid i = 1,\; \ldots ,\; n\}$:
+\begin{itemize}
+\item The mobile sensors are modelled using integrator dynamics $\dot{p_i}(t)=u$.
+\item Each sensor can cover a region described by the abstract set $C_i \left( p_i(t) \right) \subset \rsqr$.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{figures/problem-def/sensor-and-coverage.png}
+\caption{A sensor and its coverage region}
+\end{figure}
+
+\subsection{Configuration}
+A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$:
+\begin{equation*}
+c\left(t\right) = \bmat{
+p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}
+\end{equation*}
+Thus the coverage of a configuration:
+\begin{equation*}
+D\left( c\left( t \right) \right) = \cap C_i(p_i(t))
+\end{equation*}
+Let us consider a sub-area of $A,\; A_m \subset A$ which must be partially covered (e.g. ground station).
+
+\begin{assumption}
+$D\left( c\left( t \right) \right) \subset A$ - a single configuration \emph{can't} provide full coverage!
+\end{assumption}
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{figures/problem-def/config-1.png}
+	\end{subfigure}
+	\hspace{0.75cm}
+	\vline
+	\hspace{0.75cm}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{figures/problem-def/config-2.png}
+	\end{subfigure}
+	\caption{Two configurations built from the same sensors set}
+\end{figure}
+
+
+\subsection{Partition}
+The partition of $A \in \rsqr$, $PR(A)$, is a finite set built from $n$ subset $pr_i \subset \rsqr,\; i=1,\; \ldots,\; n$ such that:
+\begin{itemize}
+\item $pr_i \cap pr_j = \emptyset \; \forall i \neq j$.
+\item $\cup pr_i = A$.
+\end{itemize}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.4]{figures/problem-def/partitioning.png}
+\caption{An example of a partition of some area}
+\end{figure}
+
+\subsection{Problem Definition}
+\begin{problem} \label{GeneralProblem}
+\begin{enumerate}
+\item Find a partition $PR(A)$ such that each subsets $pr_i \in PR(A), \; pr_i \cap A_m \neq \emptyset$
+\item Find a deployment controller, such that $$ pr_i \subseteq \lim_{t\rightarrow \infty}D(c(t)),\text{for }i=1,\ldots,n.$$
+\end{enumerate}
+\end{problem}
+
 
 \section{Voronoi Diagrams and Distributed Coverage Algorithms}
 %\textcolor{red}{(provide short paragraph summarizing what you will talk about here)}
@@ -155,53 +221,11 @@ Another thing to notice is that one can modify the density function, which will 
 
 %\textcolor{red}{(what is missing in this section is the idea that this is a cooperative/distributed calculation, and neighbors share information - this is important!)}
 
-\section{Problem Formulation}
-Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \mathbb{N}$ \emph{mobile} sensors. Those sensors are defined as the set $S = \{s_1, \ldots, s_n\}$ located at positions $P(t) = \{ p_i (t) \in \rsqr \mid i = 1,\; \ldots ,\; n\}$:
-\begin{itemize}
-\item The mobile sensors are modelled using integrator dynamics $\dot{p_i}(t)=u$.
-\item Each sensor can cover an area described by the abstract set $C_i \left( p_i(t) \right) \subset \rsqr$.
-\end{itemize}
 
-\subsection{Configuration}
-A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$:
-\begin{equation*}
-c\left(t\right) = \bmat{
-p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}
-\end{equation*}
-Thus the coverage of a configuration:
-\begin{equation*}
-D\left( c\left( t \right) \right) = \cap C_i(p_i(t))
-\end{equation*}
-Let us consider a sub-area of $A,\; A_m \subset A$ which must be partially covered (e.g. ground station).
-
-\begin{assumption}
-$D\left( c\left( t \right) \right) \subset A$ - a single configuration \emph{can't} provide full coverage!
-\end{assumption}
-
-\subsection{Partition}
-The partition of $A \in \rsqr$, $PR(A)$, is a finite set built from $n$ subset $pr_i \subset \rsqr,\; i=1,\; \ldots,\; n$ such that:
-\begin{itemize}
-\item $pr_i \cap pr_j = \emptyset \; \forall i \neq j$.
-\item $\cup pr_i = A$.
-\end{itemize}
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.6]{figures/problem-def/partitioning.png}
-\caption{An example of a partition of some area $PR(A)$}
-\end{figure}
-
-\subsection{Problem Definition}
-\begin{problem} \label{GeneralProblem}
-\begin{enumerate}
-\item Find a partition $PR(A)$ such that each subset $pr_i \in PR(A), \; pr_i \cap A_m \neq \emptyset$
-\item Find a deployment controller, such that $$ pr_i \subseteq \lim_{t\rightarrow \infty}D(c(t)),\text{for }i=1,\ldots,n.$$
-\end{enumerate}
-\end{problem}
 
 \section{Proposed Solution}
 Assuming that there are no constraints at all, we propose an algorithm to solve the problem mentioned above:
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{Problem (\ref{GeneralProblem}) Solution Algorithm}\label{GeneralProbSolution}
 \begin{algorithmic}[1]
 \State Using some random initial guess, calculate the CVT for the whole area.

@@ -28,16 +28,6 @@ Cassandras, C.~G. and Li, W., \enquote{{Sensor Networks and Cooperative
   Control},} \emph{Decision and Control, 2005 and 2005 European Control
   Conference. CDC-ECC '05. 44th IEEE Conference on}, pp. 4237--4238.
 
-\bibitem{Hokayem2007}
-Hokayem, P.~F., Stipanovi{\'{c}}, D., and Spong, M.~W., \enquote{{On persistent
-  coverage control},} \emph{Proceedings of the IEEE Conference on Decision and
-  Control}, pp. 6130--6135, \doi{10.1109/CDC.2007.4434875}.
-
-\bibitem{Cortes2004}
-Cortes, J. and Martinez, S., \enquote{{Coverage control for mobile sensing
-  networks},} \emph{Robotics and Automation, {\ldots}}, Vol.~20, No.~2, 2004,
-  p.~13, \doi{10.1109/TRA.2004.824698}.
-
 \bibitem{Atinc2013}
 Atin{\c{c}}, G.~M., Stipanovi{\'{c}}, D.~M., Voulgaris, P.~G., and Karkoub, M.,
   \enquote{{Supervised coverage control with guaranteed collision avoidance and
@@ -50,10 +40,27 @@ Hussein, I.~I. and Stipanovic, D.~M., \enquote{{Effective Coverage Control for
   Transactions on Control Systems Technology}, Vol.~15, No.~4, 2007, pp.
   642--657, \doi{10.1109/TCST.2007.899155}.
 
+\bibitem{Cortes2004}
+Cortes, J. and Martinez, S., \enquote{{Coverage control for mobile sensing
+  networks},} \emph{Robotics and Automation, {\ldots}}, Vol.~20, No.~2, 2004,
+  p.~13, \doi{10.1109/TRA.2004.824698}.
+
 \bibitem{Du1999}
 Du, Q., Faber, V., and Gunzburger, M., \enquote{{Centroidal Voronoi
   Tessellations: Applications and Algorithms},} \emph{SIAM Review}, Vol.~41,
   No.~4, 1999, pp. 637--676, \doi{10.1137/S0036144599352836}.
+
+\bibitem{Krick2008}
+Krick, L., Broucke, M.~E., and Francis, B.~A., \enquote{{Stabilization of
+  infinitesimally rigid formations of multi-robot networks},} \emph{Proceedings
+  of the IEEE Conference on Decision and Control}, pp. 477--482,
+  \doi{10.1109/CDC.2008.4738760}.
+
+\bibitem{Kwang-KyoOh2011}
+{Kwang-Kyo Oh} and {Hyo-Sung Ahn}, \enquote{{Distance-based formation control
+  using Euclidean distance dynamics matrix: General cases},} \emph{Proceedings
+  of the 2011 American Control Conference}, pp. 4816--4821,
+  \doi{10.1109/ACC.2011.5990609}.
 
 \bibitem{Adams2009}
 Adams, J.~S., Sun, W., and Chen, Y.~Q., \emph{{Formations with decentralized

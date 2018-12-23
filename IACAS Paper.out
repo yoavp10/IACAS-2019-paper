@@ -8,6 +8,9 @@
 \BOOKMARK [2][-]{subsection.3.2}{Lloyd's Algorithm}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{Proposed Solution}{}% 9
 \BOOKMARK [2][-]{subsection.4.1}{Projected Lloyd's Algorithm}{section.4}% 10
-\BOOKMARK [3][-]{subsubsection.4.1.1}{Stability of the Projected Lloyd's Algorithm}{subsection.4.1}% 11
-\BOOKMARK [2][-]{subsection.4.2}{Results}{section.4}% 12
-\BOOKMARK [1][-]{section.5}{Concluding Remarks}{}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Full Problem Solution Algorithm}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Results}{section.4}% 12
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Results without PLA}{subsection.4.3}% 13
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Results with PLA}{subsection.4.3}% 14
+\BOOKMARK [1][-]{section.5}{Combining Lloyd's Algorithm and Formation Control}{}% 15
+\BOOKMARK [1][-]{section.6}{Concluding Remarks}{}% 16

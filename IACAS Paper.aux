@@ -30,6 +30,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {II}Problem Formulation}{2}{section.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A sensor and its coverage region\relax }}{2}{figure.caption.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {II.A}Configuration}{2}{subsection.2.1}}
+\newlabel{eq:configuration definition}{{1}{2}{Configuration}{equation.2.1}{}}
+\newlabel{eq:configuration definition@cref}{{[equation][1][]1}{[1][2][]2}}
 \citation{Cortes2004,Hussein2007,Du1999}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Two configurations built from the same sensors set\relax }}{3}{figure.caption.2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
@@ -44,8 +46,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {III.A}Voronoi Diagrams}{3}{subsection.3.1}}
 \citation{Cortes2004,Du1999,Atinc2013}
 \citation{Adams2009}
-\newlabel{Voronoi Definition}{{1}{4}{Voronoi Diagrams}{equation.3.1}{}}
-\newlabel{Voronoi Definition@cref}{{[equation][1][]1}{[1][3][]4}}
+\newlabel{Voronoi Definition}{{2}{4}{Voronoi Diagrams}{equation.3.2}{}}
+\newlabel{Voronoi Definition@cref}{{[equation][2][]2}{[1][3][]4}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Illustration of Voronoi Diagram and a CVT, both from the same initial conditions\relax }}{4}{figure.caption.5}}
 \newlabel{fig:Voronoi_tessellation_illustration}{{4}{4}{Illustration of Voronoi Diagram and a CVT, both from the same initial conditions\relax }{figure.caption.5}{}}
 \newlabel{fig:Voronoi_tessellation_illustration@cref}{{[figure][4][]4}{[1][4][]4}}
@@ -58,8 +60,8 @@
 \newlabel{LloydAlgo@cref}{{[algorithm][1][]1}{[1][5][]5}}
 \newlabel{algo:lloyd's algorithm}{{1}{5}{Lloyd's Algorithm\relax }{algorithm.1}{}}
 \newlabel{algo:lloyd's algorithm@cref}{{[algorithm][1][]1}{[1][5][]5}}
-\newlabel{LloydsContol}{{3}{5}{Continuous-time Lloyd's Algorithm}{equation.3.3}{}}
-\newlabel{LloydsContol@cref}{{[equation][3][]3}{[1][5][]5}}
+\newlabel{eq:Lloyds continuous time control}{{4}{5}{Continuous-time Lloyd's Algorithm}{equation.3.4}{}}
+\newlabel{eq:Lloyds continuous time control@cref}{{[equation][4][]4}{[1][5][]5}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Proposed Solution}{5}{section.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV.A}Projected Lloyd's Algorithm}{5}{subsection.4.1}}
 \newlabel{def:projection operator}{{1}{5}{}{definition.1}{}}
@@ -70,8 +72,8 @@
 \newlabel{ProjLloydsAlgorithm@cref}{{[algorithm][2][]2}{[1][5][]6}}
 \newlabel{algo:PLA}{{2}{6}{Projected Lloyd's Algorithm\relax }{algorithm.2}{}}
 \newlabel{algo:PLA@cref}{{[algorithm][2][]2}{[1][5][]6}}
-\newlabel{ProjectedLloydsContol}{{4}{6}{Projected Lloyd's Algorithm}{equation.4.4}{}}
-\newlabel{ProjectedLloydsContol@cref}{{[equation][4][]4}{[1][5][]6}}
+\newlabel{ProjectedLloydsContol}{{5}{6}{Projected Lloyd's Algorithm}{equation.4.5}{}}
+\newlabel{ProjectedLloydsContol@cref}{{[equation][5][]5}{[1][5][]6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces CVT and PLA solutions for initial conditions. The black box represents $A_m$.\relax }}{6}{figure.caption.7}}
 \newlabel{fig:Voronoi_tessellation_illustration}{{5}{6}{CVT and PLA solutions for initial conditions. The black box represents $A_m$.\relax }{figure.caption.7}{}}
 \newlabel{fig:Voronoi_tessellation_illustration@cref}{{[figure][5][]5}{[1][6][]6}}
@@ -84,27 +86,66 @@
 \citation{Cortes2004}
 \@writefile{toc}{\contentsline {subsection}{\numberline {IV.C}Results}{7}{subsection.4.3}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {IV.C.1}Results \emph  {without} PLA}{7}{subsubsection.4.3.1}}
-\newlabel{fig:results:no PLA}{{\caption@xref {fig:results:no PLA}{ on input line 308}}{7}{Results \emph {without} PLA}{figure.caption.9}{}}
-\newlabel{fig:results:no PLA@cref}{{[subsubsection][1][4,3]IV.C.1}{[1][7][]7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Results without PLA. The box represents $A_m$\relax }}{7}{figure.caption.9}}
+\newlabel{fig:results no PLA}{{6}{7}{Results without PLA. The box represents $A_m$\relax }{figure.caption.9}{}}
+\newlabel{fig:results no PLA@cref}{{[figure][6][]6}{[1][7][]7}}
 \citation{Cortes2004}
+\citation{Oh2015}
+\citation{Oh2015,Basiri2009}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV.C.2}Results \emph  {with} PLA}{8}{subsubsection.4.3.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Results with PLA. The box represents $A_m$\relax }}{8}{figure.caption.10}}
+\newlabel{fig:results PLA}{{7}{8}{Results with PLA. The box represents $A_m$\relax }{figure.caption.10}{}}
+\newlabel{fig:results PLA@cref}{{[figure][7][]7}{[1][7][]8}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Combining Lloyd's Algorithm and Distance-Based Formation Control}{8}{section.5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V.A}Distance-Based Formation Control}{8}{subsection.5.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V.A.1}Algebraic Graph Theory}{8}{subsubsection.5.1.1}}
+\citation{Muhammad2006}
+\citation{Roth1979}
+\citation{Krick2008}
+\citation{Kwang-KyoOh2011,Krick2008}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V.A.2}Graph Connectivity and Rigidity}{9}{subsubsection.5.1.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {V.A.3}Distance-Based Formation Controller}{9}{subsubsection.5.1.3}}
+\newlabel{eq:formation potential}{{6}{9}{Distance-Based Formation Controller}{equation.5.6}{}}
+\newlabel{eq:formation potential@cref}{{[equation][6][]6}{[1][9][]9}}
+\newlabel{eq:distance formation controller}{{7}{9}{Distance-Based Formation Controller}{equation.5.7}{}}
+\newlabel{eq:distance formation controller@cref}{{[equation][7][]7}{[1][9][]9}}
+\citation{Kwang-KyoOh2011,Krick2008}
+\citation{Cortes2004}
+\citation{Cortes2004}
+\citation{Cortes2004}
+\citation{Cortes2004}
+\newlabel{eq:distance formation controller for individual agent}{{8}{10}{Distance-Based Formation Controller}{equation.5.8}{}}
+\newlabel{eq:distance formation controller for individual agent@cref}{{[equation][8][]8}{[1][9][]10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V.B}Combining Distance-Based Formation Control and Lloyd's Algorithm}{10}{subsection.5.2}}
+\newlabel{eq:Combined Controller}{{9}{10}{Combining Distance-Based Formation Control and Lloyd's Algorithm}{equation.5.9}{}}
+\newlabel{eq:Combined Controller@cref}{{[equation][9][]9}{[1][10][]10}}
+\newlabel{proposition 1}{{1}{10}{}{proposition.1}{}}
+\newlabel{proposition 1@cref}{{[proposition][1][]1}{[1][10][]10}}
+\newlabel{Proposition 1 Lyapunov function candidate}{{10}{10}{Combining Distance-Based Formation Control and Lloyd's Algorithm}{equation.5.10}{}}
+\newlabel{Proposition 1 Lyapunov function candidate@cref}{{[equation][10][]10}{[1][10][]10}}
 \bibdata{bibliography}
 \bibcite{Nigam2012}{1}
+\newlabel{theorem: combined controller stability}{{2}{11}{}{theorem.2}{}}
+\newlabel{theorem: combined controller stability@cref}{{[theorem][2][]2}{[1][11][]11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V.C}The Combination and Problem \ref  {GeneralProblem}}{11}{subsection.5.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {V.D}Simulations}{11}{subsection.5.4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Results of the combination of Lloyd's algorithm and distance-based formation controller. The black box represents $A_m$\relax }}{11}{figure.caption.11}}
+\newlabel{fig:results formation, no PLA}{{8}{11}{Results of the combination of Lloyd's algorithm and distance-based formation controller. The black box represents $A_m$\relax }{figure.caption.11}{}}
+\newlabel{fig:results formation, no PLA@cref}{{[figure][8][]8}{[1][11][]11}}
 \bibcite{7798796}{2}
 \bibcite{7798244}{3}
 \bibcite{Cassandras2005}{4}
 \bibcite{Atinc2013}{5}
 \bibcite{Hussein2007}{6}
 \bibcite{Cortes2004}{7}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {IV.C.2}Results \emph  {with} PLA}{8}{subsubsection.4.3.2}}
-\newlabel{fig:results:PLA}{{\caption@xref {fig:results:PLA}{ on input line 317}}{8}{Results \emph {with} PLA}{figure.caption.10}{}}
-\newlabel{fig:results:PLA@cref}{{[subsubsection][2][4,3]IV.C.2}{[1][7][]8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Results with PLA. The box represents $A_m$\relax }}{8}{figure.caption.10}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Combining Lloyd's Algorithm and Formation Control}{8}{section.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Concluding Remarks}{8}{section.6}}
 \bibcite{Du1999}{8}
 \bibcite{Krick2008}{9}
 \bibcite{Kwang-KyoOh2011}{10}
 \bibcite{Adams2009}{11}
 \bibcite{Lloyd1982}{12}
+\bibcite{Oh2015}{13}
+\bibcite{Basiri2009}{14}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Concluding Remarks}{12}{section.6}}
+\bibcite{Muhammad2006}{15}
+\bibcite{Roth1979}{16}
 \bibstyle{iacas}

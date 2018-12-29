@@ -115,10 +115,11 @@ Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \math
 
 \subsection{Configuration}
 A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$:
-\begin{equation*}
+\begin{equation}
 c\left(t\right) = \bmat{
 p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}
-\end{equation*}
+\label{eq:configuration definition}
+\end{equation}
 Thus the coverage of a configuration:
 \begin{equation*}
 D\left( c\left( t \right) \right) = \cap C_i(p_i(t))
@@ -215,7 +216,7 @@ As mentioned above, the CVT's are very useful for locational optimization. Howev
 
 \subsubsection*{Continuous-time Lloyd's Algorithm}
 Cortes et al. proposed a control algorithm based on Lloyd's algorithm. According to \cite{Cortes2004}, let us define agent $i$ position as $p_i$ and the $i$'s partition centroid as $C_{V_{i}}$. Of course, this centroid is defined for some given density function, which allow us a degree of freedom in the calculations. For some proportional constant $k_{prop}$, the controller can be defined as:
-\begin{equation} \label{LloydsContol}
+\begin{equation} \label{eq:Lloyds continuous time control}
 u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right)
 \end{equation} 
 
@@ -305,22 +306,151 @@ In the following simulations, the initial conditions were identical.
 \subsubsection{Results \emph{without} PLA}
 \begin{figure}[H]
 \includegraphics[scale=0.8]{figures/proposed-sol/results/sim1-3agents-3partitions-noPLA.eps}
-\label{fig:results:no PLA}
 \caption{Results without PLA. The box represents $A_m$}
+\label{fig:results no PLA}
 \end{figure}
 
-In figure \ref{fig:results:no PLA}, we can see a simulation ran for 3 agents. The area is partitioned into 3 tiles using Lloyd's algorithm (that is CVT), and each tile is covered using the algorithm proposed in \cite{Cortes2004}. The agents moved between the tiles in arbitrary order, and one can notice that only in the last step there was coverage of $A_m$.
+In figure \ref{fig:results no PLA}, we can see a simulation ran for 3 agents. The area is partitioned into 3 tiles using Lloyd's algorithm (that is CVT), and each tile is covered using the algorithm proposed in \cite{Cortes2004}. The agents moved between the tiles in arbitrary order, and one can notice that only in the last step there was coverage of $A_m$.
 
 \subsubsection{Results \emph{with} PLA}
 \begin{figure}[H]
 \includegraphics[scale=0.8]{figures/proposed-sol/results/sim2-3agents-3partitions-PLA.eps}
-\label{fig:results:PLA}
 \caption{Results with PLA. The box represents $A_m$}
+\label{fig:results PLA}
 \end{figure}
 
-In figure \ref{fig:results:PLA}, we can see a simulation ran for 3 agents. The area is partitioned into 3 tiles using Projected Lloyd's algorithm, and each tile is covered using the algorithm proposed in \cite{Cortes2004}. The agents moved between the tiles in arbitrary order, and each tile has some partial coverage of $A_m$.
+In figure \ref{fig:results PLA}, we can see a simulation ran for 3 agents. The area is partitioned into 3 tiles using Projected Lloyd's algorithm, and each tile is covered using the algorithm proposed in \cite{Cortes2004}. The agents moved between the tiles in arbitrary order, and each tile has some partial coverage of $A_m$.
 
-\section{Combining Lloyd's Algorithm and Formation Control}
+\section{Combining Lloyd's Algorithm and Distance-Based Formation Control}
+Sometimes the agents topology should be constrained. We refer to this problem as the \emph{formation control} problem \cite{Oh2015}. The constraints can be achieved using few methods \cite{Oh2015, Basiri2009}:
+\begin{itemize}
+\item Position based - the position is determined relative to a global coordinates system.
+\item Displacement based - the position is determined using displacements of the agents relative one to each other.
+\item Bearing based - The position is not controlled directly, but the bearing between the agents is maintained.
+\item Distance based - The formation is defined by the distance between the agents which is being controlled.
+\end{itemize}
+In this chapter, the \emph{Distance-based} formation control will be in use.
+
+\subsection{Distance-Based Formation Control}
+\subsubsection{Algebraic Graph Theory}
+A graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ is a pair of two finite sets - the \emph{vertices} (nodes) set $V$ ($|V| = n$), and edges $\mathcal{E} \subseteq V\times V$. Each vertex can represent a mathematical or physical entity, for example - a sensor. Each edge represents some relation between two entities, for example - communication connectivity or congruent sensing range. An edge connecting nodes $v_i, v_j$ is denoted $e_{ij} = \left\{v_i, v_j\right\}$. An \emph{undirected graph} is a type of graph where $\forall v_i, v_j \in V$ there exist both $e_{ij}$ and $e_{ji}$. A vertex degree (for an undirected graph) is the number of edges connected to it, and marked for vertex $i$ as $d_{i}$. 
+
+The \emph{adjacency matrix} of a graph $\mathcal{G} = \left(V, \mathcal{E}\right), \; A(\mathcal{G})$ is a symmetric matrix such that $A(i,j) = 1$ if $\{v_i, v_j\} \in \mathcal{E}$ and $0$ otherwise.
+
+The \emph{incidence matrix} of a graph $\mathcal{G} = \left(V, \mathcal{E}\right), \; E(\mathcal{G}))$ is a matrix such that $E(i,j) = 1$ when a node $v_i \in \mathcal{V}$ is incident to the edge $e_{ij} \in \mathcal{E}$, and $0$ otherwise.
+
+\subsubsection{Graph Connectivity and Rigidity}
+Given a configuration as defined in (\ref{eq:configuration definition}), we can define the \emph{connectivity graph} \cite{Muhammad2006}. Given a connectivity radius $R$ (assuming all the agents are identical in terms of connectivity radius), we define the \emph{connectivity graph} of a configuration $c$ as $\mathcal{G}_c\left(c, R \right) = \left(\mathcal{V,E}\right)$ such that each node $v_{i}$ of the graph is mapped to an agent position $p_{i}$. This mapping defines the pair $\left\{\mathcal{G}, c \right\}$, also known as a \textit{framework}. Given two graph nodes $v_{i},v_{j}, i\neq j$, then $\left\{v_{i}, v_{j}\right\} \in \mathcal{E} \Leftrightarrow \norm{p_{i} - p_{j}} \leq R$.
+
+For the following definitions, $S(\mathcal{V})$ is the mapping between some configuration to the graph nodes set $\mathcal{V}$, and $S(v_l)$ is a mapping for a specific node $l$. All of those definitions can be found also in \cite{Roth1979}.
+
+\begin{definition}
+Two frameworks $(\mathcal{G}, S_0), (\mathcal{G}, S_1)$ are \emph{equivalent} if $$\;\norm{S_0(v_i) - S_0(v_j)} = \norm{S_1(v_i) - S_1(v_j)} \; \forall \; \{v_i, v_j\} \in \mathcal{E}$$\\
+Two frameworks are \emph{congruent} if $$\;\norm{S_0(v_i) - S_0(v_j)} = \norm{S_1(v_i) - S_1(v_j)} \; \forall \; v_i, v_j \in \mathcal{V	}$$
+\end{definition}
+
+\begin{definition}
+A framework $(\mathcal{G}, S_0)$ is rigid if there exists an $\epsilon > 0$ such that every framework $(\mathcal{G}, S_1)$ that is equivalent to $(\mathcal{G}, S_0)$ and satisfies $\norm{S_0(v) - S_1(v)} < \epsilon \; \forall \; v \in \mathcal{V}$,
+is congruent to $(\mathcal{G}, S_0)$.
+\end{definition}
+
+\begin{definition}
+A framework $(\mathcal{G}, S_0)$ is globally rigid if every framework that is equivalent to $(\mathcal{G}, S_0)$ is congruent to $(\mathcal{G}, S_0)$.
+\end{definition}
+
+\begin{definition}
+A \emph{minimally rigid framework} is a rigid framework $(\mathcal{G}, S_0)$ such that
+the removal of any edge in $\mathcal{G}$ results in a non-rigid framework.
+\end{definition}
+
+A complete definition the \emph{rigidity matrix} can be found in \cite{Krick2008}. For this work, it will be marked as $R(c) \in \mathbb{R}^{|\mathcal{E}| \times 2|\mathcal{V}}$.
+
+\subsubsection{Distance-Based Formation Controller}
+Let us define a framework $\left\{\mathcal{G}, c \right\}$. The graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a connectivity graph, and we also define the set $D = \{d_1, \ldots, d_{|\mathcal{E}|}\}$ as the required length of each edge of the graph, while the actual length is given by $\norm{e_i},\; e_i \in \mathcal{E}$. We can now define a \emph{formation potential} of a framework:
+\begin{equation}
+F(p) = \frac{1}{4}\sum_{k=1}^{\varepsilon}\left( \norm{e_k}^2 - d_{k}^{2} \right) = \frac{1}{4}\sum_{k=1}^{\varepsilon} \sigma_k^2 = \frac{1}{4}\sigma^T \sigma
+\label{eq:formation potential}
+\end{equation}
+where $p$ is the positions of the agents in a configuration $c$, and $\sigma = \left[\sigma_1, \ldots \sigma_\mathcal{E} \right], \; \sigma_i = \norm{e_i^2 - d_{i}^{2}}$.
+
+A proposed controller is a gradient-dynamics based controller \cite{Kwang-KyoOh2011,Krick2008}:
+\begin{equation}
+\dot{p} = -\nabla F(p) = -R(p)^{T} R(p) p - R(p)^{T}D^2
+\label{eq:distance formation controller}
+\end{equation}
+Where $D^2 = \{d_1^2, \ldots, d_{|\mathcal{E}|}^2\}$. The controller is also related to the rigidity matrix!\\
+The controller can be also defined for each individual agent. If $d_{ij}$ is the required distance between agents $i,j$ (that is the required distance assigned to the edge $ek = \{v_i, v_j\}$), then:
+\begin{equation}
+    \dot{p_{i}} = -\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)
+    \label{eq:distance formation controller for individual agent}
+\end{equation}
+It can be shown that this controller is locally asymptomatic stable \cite{Kwang-KyoOh2011,Krick2008}.
+
+\subsection{Combining Distance-Based Formation Control and Lloyd's Algorithm}
+In this section, a combined deployment and formation controller will be shown. As both (\ref{eq:Lloyds continuous time control}) and (\ref{eq:distance formation controller}) are locally asymptomatic stable gradient descent controllers, it might be possible to combine them. Let us define a coefficient $0 \leq \alpha \leq 1$. The proposed controller:
+\begin{equation}
+    u_{i} = \dot{p_{i}} = \alpha \left(-k_{p}\left( p_i -C_{V_{i}} \right)\right) +
+    \left( 1-\alpha \right)\left[-\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)  \right] 
+    \label{eq:Combined Controller}
+\end{equation}
+There are few interesting results regarding this controller.
+
+\begin{proposition}
+    Let us assume that there exists a Central Voronoi Tessellation (CVT), with $C_{V_{i}}$ such that $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$ (that is $C_{V_{i}}$ satisfy the formation controller constraint). Then, there exists an equilibrium such that $p_{i} = C_{V_{i}}$, which is locally asymptotic stable with (\ref{eq:Combined Controller}) dynamics.
+    \label{proposition 1}
+\end{proposition}
+
+\begin{proof}
+    First of all, let us show that $P = C_{V}$ is an equilibrium point. Looking on (\ref{eq:Combined Controller}), it's easy to see that when $\norm{p_{i} - p_{j}}^{2} = d_{ij}^{2}$, $P = C_{V}$ is an equilibrium point. \br
+
+    Now we're ready to prove that this equilibrium is stable. Let us Choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
+    \begin{equation}
+        V_{c}\left(P\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}} \min_{i\in \left\{1,\ldots, n\right\}} \norm{q-p_{i}}^2\phi(q)dq \right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (P)\sigma(P) \right]
+        \label{Proposition 1 Lyapunov function candidate}
+    \end{equation}
+    where $\sigma_{i} = \sum_{i \sim j}\norm{p_{i} - p_{j}}^{2} - d_{ij}^2$, $\sigma(P) = \begin{bmatrix} \sigma_{1} && \ldots && \sigma_{n} \end{bmatrix}^{T}$ and $ J_{V_{i},C_{V_{i}}}, M_{V_{i}}$ are as defined in \cite{Cortes2004}.
+
+    since the equilibrium point is $P = C_{v}$, we will change the variables, so $\zeta = P - C_{V}$, hence:
+    \begin{equation}
+        V_{c}\left(\zeta\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}}\min_{i\in \left\{1,\ldots, n\right\}} \norm{q-\zeta_{i} - C_{V_{i}}}^2 \phi(q) dq\right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (\zeta + C_{V_{i}})\sigma(\zeta + C_{V_{i}}) \right]
+    \end{equation}
+    
+    According to Lyapunov direct method, to prove asymptotical stability, one have to show:
+    \begin{itemize}
+        \item[(1)] $V_{C}(0) = 0$
+        \item[(2)] $V_{C}(\zeta) > 0 \Leftrightarrow \zeta \neq 0$
+        \item[(3)] $\dot{V}_{C}(\zeta) < 0$
+    \end{itemize}
+For condition (1), $V_{C}(0) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}}\min_{i\in \left\{1,\ldots, n\right\}} \norm{q- C_{V_{i}}}^2 \phi(q) dq\right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (C_{V_{i}})\sigma(C_{V_{i}}) \right] $ \cite{Cortes2004}.\br
+    While it is obvious that $\sigma(C_{V_{i}}) = 0$, we have to look into the first term of the Lyapunov function. It is obvious that there is a minimum at $C_{V}$, therefore the integral gets him minimal value over there. Moreover, since the function we are minimizing is for the form $f(x) = x^{2}$, the minimum is $0$. Therefore, condition $(1)$ applies. \br
+For condition (2), it's obvious that both terms are strictly positive for $\zeta \neq 0$.\br
+For condition (3), the combined derivative of the combined Lyapunov function is \cite{Cortes2004}:
+    \begin{equation}
+        \dot{V}_{C}(\zeta) = \alpha \left[ -2k_{p}\sum_{i=1}^{n}M_{V_{i}}\norm{p_{i} - C_{V_{i}}}^{2} \right] + (1-\alpha)\left[ -\sigma(P)^{T}R(p)R^{T}(p)\sigma(P) \right] \leq 0
+    \end{equation}
+    As we can see, this term is smaller \emph{or equal} to zero. Therefore, using Lyapunov method, this system is stable, however not asymptotically stable. That said, we can notice that the set $S = \left\{ P = C_{V} \right\}$ doesn't contain any trivial trajectory apart from the trivial trajectory (when $\zeta = 0$), therefore by LaSalle principal, the system is Locally asymptotic stable.
+\end{proof}
+
+\begin{theorem}
+The controller (\ref{eq:Combined Controller}) is locally asymptotically stable.
+    \label{theorem: combined controller stability}
+\end{theorem}
+\begin{proof}
+TODO!
+\end{proof}
+
+\subsection{The Combination and Problem \ref{GeneralProblem}}
+As the combination of controllers provide some interesting results, it is very important to remember that it doesn't necessarily solves problem \ref{GeneralProblem}. The reason is that the formation is changing the deployment, thus the condition for full area coverage might be broken. This work \emph{does not} provide a condition where the formation control holds \emph{and} problem \ref{GeneralProblem} is fully solved.
+
+\subsection{Simulations}
+
+\begin{figure}[H]
+\includegraphics[scale=0.8]{figures/proposed-sol/results/sim3-3agents-3partitions-noPLA-formation.eps}
+\caption{Results of the combination of Lloyd's algorithm and distance-based formation controller. The black box represents $A_m$}
+\label{fig:results formation, no PLA}
+\end{figure}
+
+In figure \ref{fig:results formation, no PLA}, we can see a simulation ran for 3 agents where a triangular formation was defined ($d_{12} = d_{13} = 1,\; d_{23} = 2$), and combined with Lloyd's algorithm with $\alpha = 0.5$. Comparing to figure \ref{fig:results no PLA}, which can be seen as the same simulation where $\alpha = 1$, it is clear that the agents are having a more triangular shape.
 
 \section{Concluding Remarks}
 %The Coverage Problem is well known and researched. This work provides a new approach for the common problem of not having enough sensors, and deals with it from a static point of view, while maintaining coverage on some constrained area.\\

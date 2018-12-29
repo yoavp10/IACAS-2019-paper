@@ -73,4 +73,25 @@ Lloyd, S., \enquote{{Least squares quantization in PCM},} \emph{IEEE
   IEEE Trans. Inform. Theory}, Vol.~28, No.~2, 1982, pp. 129--137,
   \doi{10.1109/TIT.1982.1056489}.
 
+\bibitem{Oh2015}
+Oh, K.~K., Park, M.~C., and Ahn, H.~S., \enquote{{A survey of multi-agent
+  formation control},} \emph{Automatica}, Vol.~53, 2015, pp. 424--440,
+  \doi{10.1016/j.automatica.2014.10.022}.
+
+\bibitem{Basiri2009}
+Basiri, M., Bishop, A.~N., and Jensfelt, P., \enquote{{Distributed control of
+  triangular sensor formations with angle-only constraints},} in
+  \enquote{ISSNIP 2009 - Proceedings of 2009 5th International Conference on
+  Intelligent Sensors, Sensor Networks and Information Processing,} Elsevier
+  B.V., Vol.~59, 2009, pp. 121--126, \doi{10.1109/ISSNIP.2009.5416849}.
+
+\bibitem{Muhammad2006}
+Muhammad, A., Ji, M., and Egerstedt, M., \emph{{Applications of Connectivity
+  Graph Processes in Networked Sensing and Control}}, Springer Berlin
+  Heidelberg, Berlin, Heidelberg, pp. 69--82, 2006, \doi{10.1007/11533382_5}.
+
+\bibitem{Roth1979}
+Roth, B., \enquote{{The Rigidity},} \emph{Journal of Mathematical Analysis and
+  Applications}.
+
 \end{thebibliography}

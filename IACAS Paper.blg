@@ -2,4 +2,6 @@ This is BibTeX, Version 0.99dThe top-level auxiliary file: IACAS Paper.aux
 The style file: iacas.bst
 Database file #1: bibliography.bib
 Warning--can't use both volume and number fields in Adams2009
-(There was 1 warning)
+Warning--can't use both volume and number fields in Basiri2009
+Warning--can't use both author and editor fields in Muhammad2006
+(There were 3 warnings)

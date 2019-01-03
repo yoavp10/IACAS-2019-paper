@@ -19,6 +19,7 @@
 \usepackage{enumitem}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{verbatim}
 %\usepackage[english,hebrew]{babel}
 %\usepackage{hebfont}
 \captionsetup{compatibility=false}
@@ -84,51 +85,60 @@ This work presents a new approach for a coverage problem for large areas and a l
 
 \section{Introduction}
 
-The mission of monitoring some range (for example, area) using sensors is widely spread in various fields - it can be used for photographing a large area, receiving or sending electromagnetic signals, tracking targets, or even for designing an algorithm for a robotic vacuum cleaner \cite{Nigam2012, 7798796, 7798244}.
+The mission of monitoring some range (for example, an area) using sensors is widely spread in various fields - it can be used for photographing a large area, receiving or sending electromagnetic signals, tracking targets, or even for designing an algorithm for a robotic vacuum cleaner \cite{Nigam2012, 7798796, 7798244}.
 %
 This research area is known in the scientific community as the \emph{coverage control} problem \cite{Cassandras2005}. Sensor coverage can be generally described as the reflection of how well a given range is monitored by sensors. This field is well explored in the scientific community, especially in the recent years when the fields of distributed algorithms and cooperative systems were developed.
 
-A concept that repeats in many researches is finding a set of trajectories (at least one route for every sensor), allowing the mobile sensors to achieve the required coverage goal.  For example, when trying to cover an area using two mobile sensors, the algorithm will define a trajectory for each sensor such that the whole area will be covered \cite{Atinc2013,Hussein2007}.
+A concept that repeats in many works is finding a set of trajectories (at least one route for every sensor), allowing the mobile sensors to achieve the required coverage goal.  For example, when trying to cover an area using two mobile sensors, the algorithm will define a trajectory for each sensor such that the whole area will be covered \cite{Atinc2013,Hussein2007}.
 Another idea that appears in most of the relevant literature is the use of Voronoi diagrams for optimizing the sensor location \cite{Cortes2004,Hussein2007}. 
 
-When coverage is required for large areas, and specifically when a single sensor cannot provide full coverage of that area, the idea of using a \emph{deployment} of mobile sensors is presented \cite{Cassandras2005, Cortes2004}. In \cite{Cassandras2005}, the problem is formed using a probabilistic network model and some density function, to model evens. Then, an optimization algorithm is proposed to find the optimal deployment such that maximum coverage is obtained with minimal communications cost. On \cite{Cortes2004}, Cortes \textit{et al.} propose an optimization algorithm for maximal coverage using Centroidal Voronoi Tessellations \cite{Du1999}. The former concept will be utilized and modified in this paper to achieve new coverage capabilities that will be further described.
+When coverage is required for large areas, and specifically when a single sensor cannot provide full coverage of that area, the idea of using a \emph{deployment} of mobile sensors is presented \cite{Cassandras2005, Cortes2004}. In \cite{Li2005}, the problem is formed using a probabilistic network model and some density function, to model detections of events. Then, an optimization algorithm is proposed to find the optimal deployment such that maximum coverage is obtained with minimal communications cost. In \cite{Cortes2004}, Cortes \textit{et al.} propose an optimization algorithm for maximal coverage using Centroidal Voronoi Tessellations \cite{Du1999}. To achieve this partitioning, they are utilizing a continuous controller of the \emph{Lloyd's algorithm} \cite{Lloyd1982}. The former concept will be utilized and modified in this paper to achieve new coverage capabilities that will be further described.
 
-In this work, we formulate the coverage problem from another angle. We firstly assume that the given range can be at most \emph{partially} covered, however we also define some sub-range that must be at least partially covered at all times (for example, surveillance or home-base communications constraint). We present an algorithm for partitioning this range into tiles, such that each tile intersects with this sub-range constraint, and then, utilizing \cite{Cortes2004} method to achieve coverage of this tile. This method has two main benefits - first, we can achieve full coverage if we \emph{sequentially} moving the agents from tile to tile, and second - the operator can return the agents to any tile whenever he desires to.
+In this work, we formulate the coverage problem from another angle. We firstly assume that the given range can be at most \emph{partially} covered, however we also define some sub-range that must be at least partially covered at all times (for example, surveillance or home-base communications constraint). We present an algorithm for partitioning this range into tiles, such that each tile intersects with this sub-range constraint, and then, utilizing \cite{Cortes2004} method to achieve coverage of this tile. To achieve this intersection, we present a new, modified version of Lloyd's algorithm - the \emph{projected Lloyd's algorithm}. This method has two main benefits - first, we can achieve full coverage if we \emph{sequentially} moving the agents from tile to tile, and second - the operator can return the agents to any tile whenever he desires to.%  \textcolor{red}{(be more explicit - you should talk about how you do it - i.e. the projected lloyd algorithm)}
 
-There are some cases where maintaining spatial properties is important. One example is when the communications between the sensors are limited to some range. Another example is when the spatial shape is critical for the mission, as in geolocation missions. A well known solution for this problem is the distance-based formation control \cite{Krick2008, Kwang-KyoOh2011}. 
+However, there are some cases where maintaining spatial properties is also as important as keeping the required range covered. One example is when the communications between the sensors are limited to some range. Another example is when the spatial shape is critical for the mission, as in geolocation missions. There are several solutions for this problem, known generally as \emph{formation control} problem \cite{Oh2015}. Formation control can be done using several methods, including \cite{Oh2015, Basiri2009}:
+\begin{itemize}
+\item Position based - the position is determined relative to a global coordinates system.
+\item Displacement based - the position is determined using displacements of the agents relative one to each other.
+\item Bearing based - The position is not controlled directly, but the bearing between the agents is maintained.
+\item Distance based - The formation is defined by the distance between the agents which is being controlled.
+\end{itemize}
+In this work, we will present a method to combine a deployment algorithm (\cite{Cortes2004}) with a distance based formation controller, and will show how it affects the results. However, we will not provide a condition for full coverage when this combination is in use.%\textcolor{red}{(this is an unfinished paragraph - explain what you are doing)}
 \br
 
 Following this chapter, the problem will be formally defined. Then, mathematical background on the main concepts of this paper will be given, followed by the solution algorithms and control strategies. Finally, numerical simulations will be shown.
 
 \section{Problem Formulation}
-Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \mathbb{N}$ \emph{mobile} sensors. Those sensors are defined as the set $S = \{s_1, \ldots, s_n\}$ located at positions $P(t) = \{ p_i (t) \in \rsqr \mid i = 1,\; \ldots ,\; n\}$:
-\begin{itemize}
-\item The mobile sensors are modelled using integrator dynamics $\dot{p_i}(t)=u$.
-\item Each sensor can cover a region described by the abstract set $C_i \left( p_i(t) \right) \subset \rsqr$.
-\end{itemize}
+Let us consider an area $A \subset \rsqr$ that we aim to cover with $n \in \mathbb{N}$ \emph{mobile} sensors. Those sensors are defined by the set $S = \{s_1, \ldots, s_n\}$ located at positions $P(t) = \{ p_i (t) \in \rsqr \mid i = 1,\; \ldots ,\; n\}$. Those $n$ mobile sensors have integrator dynamics, i.e. $\dot{p_i}(t)=u_i(t)$, and each sensor can cover a region described by the abstract set $C_i \left( p_i(t) \right) \subset \rsqr$.
+ %\textcolor{red}{(do not use bullets - write things in text as part of a paragraph)}
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{figures/problem-def/sensor-and-coverage.png}
-\caption{A sensor and its coverage region}
+\caption{A sensor and its coverage region.}
 \end{figure}
 
-\subsection{Configuration}
-A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$:
+%\subsection{Configuration}
+A configuration $c$ of the mobile sensors at time $t$ is the stack of the sensor positions at time $t$,
 \begin{equation}
 c\left(t\right) = \bmat{
-p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n}
+p_{1}^{T}\left(t\right)&\cdots&p_{n}^{T}\left(t\right)}^{T}\in\mathbb{R}^{2n},
 \label{eq:configuration definition}
 \end{equation}
-Thus the coverage of a configuration:
+%\textcolor{red}{(all equations must have punctuation at the end (period, comma, semicolon, etc)}
+Thus the coverage of a configuration is given by
 \begin{equation*}
-D\left( c\left( t \right) \right) = \cap C_i(p_i(t))
+D\left( c\left( t \right) \right) = \cap C_i(p_i(t)).
 \end{equation*}
-Let us consider a sub-area of $A,\; A_m \subset A$ which must be partially covered (e.g. ground station).
-
+We shall also that it is not possible to cover the whole area $A$ using a single configuration.
 \begin{assumption}
-$D\left( c\left( t \right) \right) \subset A$ - a single configuration \emph{can't} provide full coverage!
+For any configuration $c(t)$, the coverage satisfies $D\left( c\left( t \right) \right) \subset A$. % - a single configuration \emph{can't} provide full coverage!
+\label{assump: no full coverage}
 \end{assumption}
+
+Let us consider a sub-area of $A,\; A_m \subset A$. $A_m$ can represent a ground station communication constraint, a surveillance constraint etc., that means that $A_m$ must be partially covered at all times (e.g. ground station).
+%\textcolor{red}{(please use text to introduce the assumption...explain what is going on then formally provide the assumption.}
+
 
 \begin{figure}[H]
 \centering
@@ -141,65 +151,78 @@ $D\left( c\left( t \right) \right) \subset A$ - a single configuration \emph{can
 	\begin{subfigure}[b]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{figures/problem-def/config-2.png}
 	\end{subfigure}
-	\caption{Two configurations built from the same sensors set}
-	\label{fig:configurationsExample}
+	\caption{Two configurations built from the same sensors set.}
+	\label{fig:configurations Example}
 \end{figure}
 
 
-\subsection{Partition}
-The partition of $A \in \rsqr$, $PR(A)$, is a finite set built from $n$ subset $pr_i \subset \rsqr,\; i=1,\; \ldots,\; n$ such that:
+%\subsection{Partition}
+%\textcolor{red}{(please use more text to link together the pieces you are writing - tell a story)}
+
+In figure \ref{fig:configurations Example}, we can see how a given configuration can cover some area in different ways. However, due to assumption \ref{assump: no full coverage} we know that it isn't possible using a single configuration. Therefore, we shall \emph{partition} the area.
+
+\begin{definition}
+A \emph{partition} of $A \in \rsqr$, $PR(A)$ is a finite set built from $n$ subsets $pr_i \subset \rsqr,\; i=1,\; \ldots,\; n$ such that:
 \begin{itemize}
 \item $pr_i \cap pr_j = \emptyset \; \forall i \neq j$.
 \item $\cup pr_i = A$.
 \end{itemize}
+\end{definition}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.4]{figures/problem-def/partitioning.png}
-\caption{An example of a partition of some area}
+\caption{An example of a partition of some area.}
 \end{figure}
 
-\subsection{Problem Definition}
+This work goal is to find a partition $PR(A)$ such that each of it's subset $pr_i$ intersects with $A_m$, \textbf{and} that each $pr_i$ can be covered at some time.
+
 \begin{problem} \label{GeneralProblem}
+
 \begin{enumerate}
-\item Find a partition $PR(A)$ such that each subsets $pr_i \in PR(A), \; pr_i \cap A_m \neq \emptyset$
+\item Find a partition $PR(A)$ such that each of the subsets $pr_i \in PR(A)$ satisfy $pr_i \cap A_m \neq \emptyset$;
 \item Find a deployment controller, such that $$ pr_i \subseteq \lim_{t\rightarrow \infty}D(c(t)),\text{for }i=1,\ldots,n.$$
 \end{enumerate}
 \end{problem}
 
+In the following section, the basic mathematical concepts used in this work will be introduced, following by a solution for problem \ref{GeneralProbSolution}.
+%\textcolor{red}{(use text to explain what the problem statement is! then say what you will discuss in next section to set things up)}
 
 \section{Voronoi Diagrams and Distributed Coverage Algorithms}
 %\textcolor{red}{(provide short paragraph summarizing what you will talk about here)}
-In this chapter we will introduce two main concepts that were used in this work. First, Voronoi Diagrams, and later Lloyd's algorithm.
+In this chapter we will introduce two main concepts that were used in this work. The first is that of \emph{Voronoi diagrams}, and the later \emph{Lloyd's algorithm}.
 \subsection{Voronoi Diagrams}
-The basic mathematical concept that we employ in this work is the \emph{Voronoi Diagram} (also known as Voronoi partition or Voronoi tessellation). While being a method to partition an area with some cost function, it is a widely-used in the optimal coverage problem \cite{Cortes2004,Hussein2007, Du1999}. The Voronoi Diagram of a region $\Omega \subset \rsqr$ is the set of partitions $\mathcal{V} = \left\{V_{i} \mid \cup V_{i} = \Omega\right\}$, generated by the generators $\mathcal{Z} = \{z_1,\ldots,z_n\mid z_{i} \in \Omega\}$, such that
+The basic mathematical concept that we employ in this work is the \emph{Voronoi Diagram} (also known as Voronoi partition or Voronoi tessellation). While being a method to partition an area with some cost function, it is a widely used in the optimal coverage problem \cite{Cortes2004,Hussein2007, Du1999}. 
+
+The Voronoi Diagram of a region $\Omega \subset \rsqr$ is the set of partitions $\mathcal{V} = \left\{V_{i} \mid \cup V_{i} = \Omega\right\}$, generated by the generators $\mathcal{Z} = \{z_1,\ldots,z_n\mid z_{i} \in \Omega\}$, such that
 \begin{equation} \label{Voronoi Definition}
 V_{i} = \{q\in\Omega \mid \norm{q - z_i} \leq \norm{q - z_j} \forall z_i,z_j\in\mathcal{Z}\},
 \end{equation}
 where $V_{i}$ corresponds to the $i$-th element of $\mathcal{Z}$, and $\norm{\cdot}$ denotes the Euclidean distance.
+%
+A more intuitive and non-formal definition of the Voronoi Diagram is as follows. If we take some area and place points $p_i$ in it, then each partition is the set of all points that are closer to $p_i$ than $p_j$, when $j \neq i$. An example is the problem where there are post offices in some city, and it is needed to decide which house will be served by which specific post office. Using Voronoi partitioning, we can determine which houses are the nearest to each office and therefore conclude which houses each branch will serve. A visual example can be seen in figure \ref{fig:Voronoi_tessellation_illustration}(a).
+%\textcolor{red}{(you should already refer to your figure as an example)}
+%\subsubsection*{Centroidal Voronoi Tessellation}
 
-A more intuitive and non-formal definition of the Voronoi Diagram is as follows. If we take some area and place points $p_i$ in it, then each partition is the set of all points that are closer to $p_i$ than $p_j$, when $j \neq i$. An example is the problem where there are post offices in some city, and it is needed to decide which house will be served by which specific post office. Using Voronoi partitioning, we can determine which houses are the nearest to each office and therefore conclude which houses each branch will serve.
-
-\subsubsection*{Centroidal Voronoi Tessellation}
-One can define a density function, $\rho_i$, for each Voronoi partition $V_{i}$. Then, we can define the center of mass for each partition as:
+One can also define a density function, $\rho_i$, for each Voronoi partition $V_{i}$. Then, we can define the center of mass for each partition as:
 \begin{equation}
-z_{i}^{*} = \frac{\int_{V_{i}}y\rho(y)dy}{\int_{V_{i}}\rho(y)dy}
+z_{i}^{*} = \frac{\int_{V_{i}}y\rho(y)dy}{\int_{V_{i}}\rho(y)dy}.
 \end{equation}
 If a generator $z_{i} = z_{i}^{*} \, \forall \,V_{i}$, we call this partitioning a \emph{centroidal Voronoi tessellation} (CVT). Such tessellations are useful in terms of location optimization \cite{Cortes2004,Du1999,Atinc2013}.
-A Voronoi tessellation illustration can be seen in Figure~\ref{fig:Voronoi_tessellation_illustration}. 
+A Voronoi tessellation illustration can be seen in Figure~\ref{fig:Voronoi_tessellation_illustration}(b). 
 
-While Voroni diagrams are useful for partitioning some existing range, CVT is a technique used for (but not only) for \textit{planning} in an optimal way. If in the Voronoi diagram explanation, it was used to plan the delivery areas for each office, we will use the CVT to find where are the optimal locations to place the post offices!
+While Voroni diagrams are useful for partitioning some existing range, CVT is a technique used for (but not only) for \textit{planning} in an optimal way. If in the Voronoi diagram explanation, it was used to plan the delivery areas for each office, we will use the CVT to find where are the optimal locations to place the post offices.
 
 \begin{figure}
 	\captionsetup[subfigure]{position=b}
 	\centering
-	\subcaptionbox{Voronoi Diagram.}{\includegraphics[width=.48\linewidth]{figures/math-bg/voronoi.png}}
-	\subcaptionbox{Centroidal Voronoi Tessellations. The points represent the center of mass, calculated using the density function $\phi = 1$.}{\includegraphics[width=.48\linewidth]{figures/math-bg/cvt.png}}
+	\subcaptionbox{Voronoi Diagram.}{\includegraphics[width=.48\linewidth]{figures/math-bg/voronoi.png}}\label{fig:voronoi:voronoi}
+	\subcaptionbox{Centroidal Voronoi Tessellations. The points represent the center of mass, calculated using the density function $\phi = 1$.}{\includegraphics[width=.48\linewidth]{figures/math-bg/cvt.png}\label{fig:voronoi:cvt}}
 	\caption{Illustration of Voronoi Diagram and a CVT, both from the same initial conditions}
 \label{fig:Voronoi_tessellation_illustration}
 \end{figure}
 
-As can be seen in equation (\ref{Voronoi Definition}), the calculation of each Voronoi cell for some agent depends on the other agents positions. Therefore, any sort of calculation required \emph{sharing information}. This can be done in a centralized approach (as it was done for this research), but there exists also decentralized calculations, for example \cite{Adams2009}. Using decentralized calculation, each agent have to have the info only on their neighbours (or any limited amount of agents), which allows for calculating huge networks, in dynamic situations where agents can, for example, connect and disconnect from the network in real time.
+As can be seen in \eqref{Voronoi Definition}, the calculation of each Voronoi cell for some agent depends on the other agents positions. Therefore, any sort of calculation requires \emph{sharing information}. This can be done in a centralized approach (as it was done for this research), but there exists also decentralized calculations, for example \cite{Adams2009}. Using decentralized calculation, each agent only requires information from their neighbours (or any limited amount of agents). This allows calculating huge networks, in dynamic situations where the agents' network can be changed in real time.% \textcolor{red}{(run-on sentence! break up what you are saying into chunks)}.
 
 \subsection{Lloyd's Algorithm}
 As mentioned above, the CVT's are very useful for locational optimization. However, calculating the CVT might be a complicated task. Lloyd proposed a very simple way of calculating the CVT \cite{Lloyd1982}, presented in Alogirthm \ref{LloydAlgo}. 
@@ -214,13 +237,13 @@ As mentioned above, the CVT's are very useful for locational optimization. Howev
 \label{algo:lloyd's algorithm}
 \end{algorithm}
 
-\subsubsection*{Continuous-time Lloyd's Algorithm}
-Cortes et al. proposed a control algorithm based on Lloyd's algorithm. According to \cite{Cortes2004}, let us define agent $i$ position as $p_i$ and the $i$'s partition centroid as $C_{V_{i}}$. Of course, this centroid is defined for some given density function, which allow us a degree of freedom in the calculations. For some proportional constant $k_{prop}$, the controller can be defined as:
+%\subsubsection*{Continuous-time Lloyd's Algorithm}
+Cortes et al. \cite{Cortes2004} proposed a control algorithm based on Lloyd's algorithm. According to \cite{Cortes2004}, let us define agent $i$ position as $p_i$ and the $i$'s partition centroid as $C_{V_{i}}$. Of course, this centroid is defined for some given density function, which allow us a degree of freedom in the calculations. For some proportional constant $k_{prop}$, the controller can be defined as:
 \begin{equation} \label{eq:Lloyds continuous time control}
-u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right)
+u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right).
 \end{equation} 
 
-Cortes et al. also proved that the controller~(\ref{LloydsContol}) is locally asymptotic stable. It can be proved using the Direct Lyaponuv method, and the proof is given on \cite{Cortes2004}.
+Cortes et al. \cite{Cortes2004} also proved that the controller~(\ref{eq:Lloyds continuous time control}) is locally asymptotic stable. It can be proved using the Direct Lyaponuv method, and the proof is given on \cite{Cortes2004}.
 
 
 \section{Proposed Solution}
@@ -228,16 +251,18 @@ Cortes et al. also proved that the controller~(\ref{LloydsContol}) is locally as
 In this chapter, problem (\ref{GeneralProblem}) will be addressed. First, we will propose an algorithm to address the special partition requirements, and then a solution for the whole problem will be shown.
 
 \subsection{Projected Lloyd's Algorithm}
-A short reminder to the first part of the problem:
+%\textcolor{red}{(please write more formally and make reference to our assumptions and problem statement - this is a bit too informal)} 
+In this section, a solution for problem \ref{GeneralProblem}(a) under assumption \ref{assump: no full coverage} will be given. A reminder for problem \ref{GeneralProblem}(a): 
 \emph{Partition the area $A$ such that $pr_i \cap A_m \neq \emptyset$}.
 
-To show the solution, we will first define a \emph{Projection} onto the area $A_m$:
+To show the solution, we will first define a \emph{projection} onto the area $A_m$:
 \begin{definition}
-$$\textsc{proj}_{A_m}(x) = \arg\min_{y \in A_m} \norm{x-y}^2$$
+Consider a set $A_m \subset \mathbb{R}^2$ and a point $x \in \mathbb{R}^2$.  The \emph{projection} of $x$ onto $A_m$ is given by
+$$\textsc{proj}_{A_m}(x) = \arg\min_{y \in A_m} \norm{x-y}^2.$$
 \label{def:projection operator}
 \end{definition}
 
-Applying the projection operator in conjuction with Lloyd's algorithm yield the \emph{Projected Lloyd's Algorithm} (PLA):
+Applying the projection operator in conjunction with Lloyd's algorithm yields the \emph{Projected Lloyd's Algorithm} (PLA), given in Algorithm \ref{ProjLloydsAlgorithm}. This combination allows solving problem \ref{GeneralProblem}(a), and it is this work's main contribution.%\textcolor{red}{(be more explicit that this is your contribution!)}
 \begin{algorithm}
 \caption{Projected Lloyd's Algorithm}\label{ProjLloydsAlgorithm}
 \begin{algorithmic}[1]
@@ -252,36 +277,44 @@ Applying the projection operator in conjuction with Lloyd's algorithm yield the 
 
 As one can see, we added two more steps over the original Lloyd's algorithm - where we project the cell center of mass to the polygon that defines the area constraint (steps number 3-4), and then moving the agents to those points. Those step allows us to ensure that at least one agent will be \emph{on} the limiting polygon, thus we will have coverage within the constraint.
 
-This algorithm can be also formed in a continuous time form, based of (\ref{LloydAlgo}):
-\begin{equation} \label{ProjectedLloydsContol}
-u_{i} = -k_{prop}\left( p_i - \textit{proj}\left( C_{V_{i}} \right) \right)
-\end{equation} 
-
+\textcolor{red}{(you should refer explicitly to figure and explain what it is...)}
+\textcolor{red}{(I feel a lot of detail is missing here...)}
 \begin{figure}
 	\captionsetup[subfigure]{position=b}
 	\centering
 	\subcaptionbox{CVT calculated using Lloyd's algorithm}{\includegraphics[width=.48\linewidth]{figures/proposed-sol/proj-lloyds-off.eps}}
 	\subcaptionbox{PLA solution}{\includegraphics[width=.48\linewidth]{figures/proposed-sol/proj-lloyds-on.eps}}
 	\caption{CVT and PLA solutions for initial conditions. The black box represents $A_m$.}
-\label{fig:Voronoi_tessellation_illustration}
+\label{fig:projected lloyds algorithm}
 \end{figure}
 
-\subsubsection*{Stability of the Projected Lloyd's Algorithm}
+In figure \ref{fig:projected lloyds algorithm}, the PLA results can be clearly seen. For the same initial condition, figure \ref{fig:projected lloyds algorithm}(a), it can be clearly seen that only 3 (out of 10 tiles) intersects with $A_m$. In figure \ref{fig:projected lloyds algorithm}(b), the PLA algorithm was activated and 10 out of 10 tiles intersects with $A_m$!
+
+This algorithm can be also formed in a continuous time form, based of (\ref{LloydAlgo}): %\textcolor{red}{(please make sure notation is consistent!)}
+\begin{equation} \label{ProjectedLloydsContol}
+u_{i} = -k_{prop}\left( p_i - \textsc{proj}\left( C_{V_{i}} \right) \right).
+\end{equation}
+This continuous time controller, which is a modification of the controller proposed in \cite{Cortes2004}, is always converging into a solution where each tile intersects with $A_m$.
+
+%\subsubsection*{Stability of the Projected Lloyd's Algorithm}
+%\textcolor{red}{(text to setup theorem)}
 \begin{theorem}
 The controller proposed in (\ref{ProjectedLloydsContol}) is locally asymptotic stable.
 \end{theorem}
 
 \begin{proof}
-TODO!
+\textcolor{red}{please start by summarizing proof of Lloyd without projection}
 \end{proof}
 
-One can notice a major difference between PLA and Loyd's algorithm - while Lloyd's algorithm is an optimal calculation (that converge to some local minima), the PLA is \emph{some} solution, and we do not provide any optimal condition.
+One can notice a major difference between PLA and Loyd's algorithm - while Lloyd's algorithm converges into some local minima, the PLA is different type of partitioning, which is not necessary optimal.
+%\textcolor{red}{(Lloyd is not really optimial since in only can guarantee convergence to a local minima! The point is that Lloyd gives us a CVT while ours gives us some different partition)}
+
 
 \subsection{Full Problem Solution Algorithm}
 The PLA is answering the question of how to partition such that $pr_i \cap A_m \neq \emptyset$. The second part of the problem, which requires a deployment controller, was answered in \cite{Cortes2004}. It is possible to utilized their solution, proposing a solution algorithm for problem (\ref{GeneralProblem}).
 
 \begin{algorithm}[H]
-\caption{Problem (\ref{GeneralProblem}) Solution Algorithm}\label{GeneralProbSolution}
+\caption{Problem \ref{GeneralProblem} Solution Algorithm}\label{GeneralProbSolution}
 \begin{algorithmic}[1]
 \State Using some random initial guess, calculate the PLA for the whole area.
 \State For each partition (assuming that the agents can actually cover each partition with their coverage radius), calculate the CVT. The initial positions for the CVT calculation is the previous partition CVT.
@@ -291,15 +324,16 @@ The PLA is answering the question of how to partition such that $pr_i \cap A_m \
 
 We should notice the following things:
 \begin{enumerate}
-\item In stage 1, the number of the partition that the area will be divided to is somewhat arbitrary.
-\item In stage 2, we assume that the coverage radius of the agents is big enough to cover the whole partition. If it's not the case, then we can dived the area for more partitions in stage 1. Some more advanced work can propose an algorithmic solution for this problem.
+\item In stage 1, the number of the tiles of the PLA solution is decided by the user and does not take into account $D(c(t))$. Therefore, for the assumption in step 2 to hold, the user should wisely select the number of tiles. 
+%\item In stage 2, we assume that the coverage radius of the agents is big enough to cover the whole partition. If it's not the case, then we can dived the area for more partitions in stage 1. Some more advanced work can propose an algorithmic solution for this problem.
 \item The Voronoi diagram can be calculated even if the agents are outside of the required area. It does require sometimes more iterations.
 \item This version of the algorithm is centralized.
 \end{enumerate}
 
+%\textcolor{red}{(this section needs more explaining...please see my mafat report as an example)}
 
 \subsection{Results}
-In this sub-section, we will show results for problem (\ref{GeneralProblem}), using algorithm \ref{algo:problem solution algorithm}.
+In this sub-section, we will show results for problem \ref{GeneralProblem}, using algorithm \ref{algo:problem solution algorithm}.
 
 In the following simulations, the initial conditions were identical.
 
@@ -322,16 +356,17 @@ In figure \ref{fig:results no PLA}, we can see a simulation ran for 3 agents. Th
 In figure \ref{fig:results PLA}, we can see a simulation ran for 3 agents. The area is partitioned into 3 tiles using Projected Lloyd's algorithm, and each tile is covered using the algorithm proposed in \cite{Cortes2004}. The agents moved between the tiles in arbitrary order, and each tile has some partial coverage of $A_m$.
 
 \section{Combining Lloyd's Algorithm and Distance-Based Formation Control}
-Sometimes the agents topology should be constrained. We refer to this problem as the \emph{formation control} problem \cite{Oh2015}. The constraints can be achieved using few methods \cite{Oh2015, Basiri2009}:
-\begin{itemize}
-\item Position based - the position is determined relative to a global coordinates system.
-\item Displacement based - the position is determined using displacements of the agents relative one to each other.
-\item Bearing based - The position is not controlled directly, but the bearing between the agents is maintained.
-\item Distance based - The formation is defined by the distance between the agents which is being controlled.
-\end{itemize}
-In this chapter, the \emph{Distance-based} formation control will be in use.
+Sometimes the agents topology should be constrained. We refer to this problem as the \emph{formation control} problem \cite{Oh2015}. In this chapter, the \emph{Distance-based} formation control will be combined with a deployment controller.
 
 \subsection{Distance-Based Formation Control}
+%\textcolor{red}{(I don't think you need all this background material on graphs and rigidity - simply write in one paragraph the tools used and appropriate references, then just present the controller (ie. your V.A.3 section).}
+In this section, a short mathematical background will be given, following by this work contribution.
+
+\subsubsection{Mathematical Background}
+A graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ is a pair of two finite sets - the \emph{vertices} (nodes) set $V$ ($|V| = n$), and edges $\mathcal{E} \subseteq V\times V$. Each vertex can represent a mathematical or physical entity, for example - a sensor. Each edge represents some relation between two entities, for example - communication connectivity or congruent sensing range.\br
+Given a configuration as defined in (\ref{eq:configuration definition}), we can define the \emph{connectivity graph} \cite{Muhammad2006}. A pair $\{\mathcal{G}, c\}$mapping between a graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ and a configuration $c$ is called a \emph{framework}. In \cite{Roth1979}, the properties of frameworks are defines, and the most important definition for this work is given - a \emph{minimally rigid framework}. In \cite{Krick2008}, a complete definition the \emph{rigidity matrix} can be found. For this work, it will be marked as $R(c) \in \mathbb{R}^{|\mathcal{E}| \times 2|\mathcal{V}}$.
+
+\begin{comment}
 \subsubsection{Algebraic Graph Theory}
 A graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ is a pair of two finite sets - the \emph{vertices} (nodes) set $V$ ($|V| = n$), and edges $\mathcal{E} \subseteq V\times V$. Each vertex can represent a mathematical or physical entity, for example - a sensor. Each edge represents some relation between two entities, for example - communication connectivity or congruent sensing range. An edge connecting nodes $v_i, v_j$ is denoted $e_{ij} = \left\{v_i, v_j\right\}$. An \emph{undirected graph} is a type of graph where $\forall v_i, v_j \in V$ there exist both $e_{ij}$ and $e_{ji}$. A vertex degree (for an undirected graph) is the number of edges connected to it, and marked for vertex $i$ as $d_{i}$. 
 
@@ -364,6 +399,7 @@ the removal of any edge in $\mathcal{G}$ results in a non-rigid framework.
 \end{definition}
 
 A complete definition the \emph{rigidity matrix} can be found in \cite{Krick2008}. For this work, it will be marked as $R(c) \in \mathbb{R}^{|\mathcal{E}| \times 2|\mathcal{V}}$.
+\end{comment}
 
 \subsubsection{Distance-Based Formation Controller}
 Let us define a framework $\left\{\mathcal{G}, c \right\}$. The graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a connectivity graph, and we also define the set $D = \{d_1, \ldots, d_{|\mathcal{E}|}\}$ as the required length of each edge of the graph, while the actual length is given by $\norm{e_i},\; e_i \in \mathcal{E}$. We can now define a \emph{formation potential} of a framework:
@@ -401,9 +437,9 @@ There are few interesting results regarding this controller.
 \end{proposition}
 
 \begin{proof}
-    First of all, let us show that $P = C_{V}$ is an equilibrium point. Looking on (\ref{eq:Combined Controller}), it's easy to see that when $\norm{p_{i} - p_{j}}^{2} = d_{ij}^{2}$, $P = C_{V}$ is an equilibrium point. \br
+    First of all, let us show that $P = C_{V}$ is an equilibrium point of \eqref{eq:Combined Controller}.  Indeed, by assumption, we have $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$, so $\norm{p_{i} - p_{j}}^{2} = \norm{C_{V_{i}} - C_{V_{j}}}^{2} =d_{ij}^{2}$, showing $P = C_{V}$ is an equilibrium point. \br
 
-    Now we're ready to prove that this equilibrium is stable. Let us Choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
+    Now we're ready to prove that this equilibrium is stable. Let us choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
     \begin{equation}
         V_{c}\left(P\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}} \min_{i\in \left\{1,\ldots, n\right\}} \norm{q-p_{i}}^2\phi(q)dq \right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (P)\sigma(P) \right]
         \label{Proposition 1 Lyapunov function candidate}
@@ -439,9 +475,10 @@ The controller (\ref{eq:Combined Controller}) is locally asymptotically stable.
 TODO!
 \end{proof}
 
-\subsection{The Combination and Problem \ref{GeneralProblem}}
-As the combination of controllers provide some interesting results, it is very important to remember that it doesn't necessarily solves problem \ref{GeneralProblem}. The reason is that the formation is changing the deployment, thus the condition for full area coverage might be broken. This work \emph{does not} provide a condition where the formation control holds \emph{and} problem \ref{GeneralProblem} is fully solved.
+%\subsection{The Combination and Problem \ref{GeneralProblem}}
 
+\begin{remark}As the combination of controllers provide some interesting results, it is very important to remember that it doesn't necessarily solves problem \ref{GeneralProblem}. The reason is that the formation is changing the deployment, thus the condition for full area coverage might be broken. This work \emph{does not} provide a condition where the formation control holds \emph{and} problem \ref{GeneralProblem} is fully solved.
+\end{remark}
 \subsection{Simulations}
 
 \begin{figure}[H]

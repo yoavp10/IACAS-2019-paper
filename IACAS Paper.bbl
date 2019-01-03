@@ -9,19 +9,18 @@
 Nigam, N., Bieniawski, S., Kroo, I., and Vian, J., \enquote{{Control of
   multiple UAVs for persistent surveillance: Algorithm and flight test
   results},} \emph{IEEE Transactions on Control Systems Technology}, Vol.~20,
-  No.~5, 2012, pp. 1236--1251, \doi{10.1109/TCST.2011.2167331}.
+  No.~5, 2012, pp. 1236--1251.
 
 \bibitem{7798796}
 Palacios-Gasós, J.~M., Montijano, E., Sagüés, C., and Llorente, S.,
   \enquote{Multi-robot persistent coverage with optimal times,} in
   \enquote{2016 IEEE 55th Conference on Decision and Control (CDC),} , 2016,
-  pp. 3511--3517, \doi{10.1109/CDC.2016.7798796}.
+  pp. 3511--3517.
 
 \bibitem{7798244}
 Loizou, S.~G. and Constantinou, C.~C., \enquote{Multi-robot coverage on
   dendritic topologies under communication constraints,} in \enquote{2016 IEEE
-  55th Conference on Decision and Control (CDC),} , 2016, pp. 43--48,
-  \doi{10.1109/CDC.2016.7798244}.
+  55th Conference on Decision and Control (CDC),} , 2016, pp. 43--48.
 
 \bibitem{Cassandras2005}
 Cassandras, C.~G. and Li, W., \enquote{{Sensor Networks and Cooperative
@@ -32,66 +31,66 @@ Cassandras, C.~G. and Li, W., \enquote{{Sensor Networks and Cooperative
 Atin{\c{c}}, G.~M., Stipanovi{\'{c}}, D.~M., Voulgaris, P.~G., and Karkoub, M.,
   \enquote{{Supervised coverage control with guaranteed collision avoidance and
   proximity maintenance},} \emph{Proceedings of the IEEE Conference on Decision
-  and Control}, pp. 3463--3468, \doi{10.1109/CDC.2013.6760414}.
+  and Control}, pp. 3463--3468.
 
 \bibitem{Hussein2007}
 Hussein, I.~I. and Stipanovic, D.~M., \enquote{{Effective Coverage Control for
   Mobile Sensor Networks With Guaranteed Collision Avoidance},} \emph{IEEE
   Transactions on Control Systems Technology}, Vol.~15, No.~4, 2007, pp.
-  642--657, \doi{10.1109/TCST.2007.899155}.
+  642--657.
 
 \bibitem{Cortes2004}
 Cortes, J. and Martinez, S., \enquote{{Coverage control for mobile sensing
-  networks},} \emph{Robotics and Automation, {\ldots}}, Vol.~20, No.~2, 2004,
-  p.~13, \doi{10.1109/TRA.2004.824698}.
+  networks},} \emph{IEEE Transactions on Robotics and Automation}, Vol.~20,
+  No.~2, 2004, pp. 243--255.
+
+\bibitem{Li2005}
+Li, W. and Cassandras, C.~G., \enquote{{Distributed cooperative coverage
+  control of sensor networks},} \emph{Proceedings of the 44th IEEE Conference
+  on Decision and Control, and the European Control Conference, CDC-ECC '05},
+  Vol. 2005, No. January 2006, 2005, pp. 2542--2547.
 
 \bibitem{Du1999}
 Du, Q., Faber, V., and Gunzburger, M., \enquote{{Centroidal Voronoi
   Tessellations: Applications and Algorithms},} \emph{SIAM Review}, Vol.~41,
-  No.~4, 1999, pp. 637--676, \doi{10.1137/S0036144599352836}.
-
-\bibitem{Krick2008}
-Krick, L., Broucke, M.~E., and Francis, B.~A., \enquote{{Stabilization of
-  infinitesimally rigid formations of multi-robot networks},} \emph{Proceedings
-  of the IEEE Conference on Decision and Control}, pp. 477--482,
-  \doi{10.1109/CDC.2008.4738760}.
-
-\bibitem{Kwang-KyoOh2011}
-{Kwang-Kyo Oh} and {Hyo-Sung Ahn}, \enquote{{Distance-based formation control
-  using Euclidean distance dynamics matrix: General cases},} \emph{Proceedings
-  of the 2011 American Control Conference}, pp. 4816--4821,
-  \doi{10.1109/ACC.2011.5990609}.
-
-\bibitem{Adams2009}
-Adams, J.~S., Sun, W., and Chen, Y.~Q., \emph{{Formations with decentralized
-  Centroidal Voronoi tessellation algorithm}}, Vol.~42, IFAC, 2009,
-  \doi{10.3182/20091006-3-US-4006.0021}.
+  No.~4, 1999, pp. 637--676.
 
 \bibitem{Lloyd1982}
 Lloyd, S., \enquote{{Least squares quantization in PCM},} \emph{IEEE
-  Transactions on Information Theory, Information Theory, IEEE Transactions on,
-  IEEE Trans. Inform. Theory}, Vol.~28, No.~2, 1982, pp. 129--137,
-  \doi{10.1109/TIT.1982.1056489}.
+  Transactions on Information Theory}, Vol.~28, No.~2, 1982, pp. 129--137.
 
 \bibitem{Oh2015}
 Oh, K.~K., Park, M.~C., and Ahn, H.~S., \enquote{{A survey of multi-agent
-  formation control},} \emph{Automatica}, Vol.~53, 2015, pp. 424--440,
-  \doi{10.1016/j.automatica.2014.10.022}.
+  formation control},} \emph{Automatica}, Vol.~53, 2015, pp. 424--440.
 
 \bibitem{Basiri2009}
 Basiri, M., Bishop, A.~N., and Jensfelt, P., \enquote{{Distributed control of
   triangular sensor formations with angle-only constraints},} in
   \enquote{ISSNIP 2009 - Proceedings of 2009 5th International Conference on
   Intelligent Sensors, Sensor Networks and Information Processing,} Elsevier
-  B.V., Vol.~59, 2009, pp. 121--126, \doi{10.1109/ISSNIP.2009.5416849}.
+  B.V., Vol.~59, 2009, pp. 121--126.
+
+\bibitem{Adams2009}
+Adams, J.~S., Sun, W., and Chen, Y.~Q., \emph{{Formations with decentralized
+  Centroidal Voronoi tessellation algorithm}}, Vol.~42, IFAC, 2009.
 
 \bibitem{Muhammad2006}
 Muhammad, A., Ji, M., and Egerstedt, M., \emph{{Applications of Connectivity
   Graph Processes in Networked Sensing and Control}}, Springer Berlin
-  Heidelberg, Berlin, Heidelberg, pp. 69--82, 2006, \doi{10.1007/11533382_5}.
+  Heidelberg, Berlin, Heidelberg, pp. 69--82, 2006.
 
 \bibitem{Roth1979}
 Roth, B., \enquote{{The Rigidity},} \emph{Journal of Mathematical Analysis and
   Applications}.
+
+\bibitem{Krick2008}
+Krick, L., Broucke, M.~E., and Francis, B.~A., \enquote{{Stabilization of
+  infinitesimally rigid formations of multi-robot networks},} \emph{Proceedings
+  of the IEEE Conference on Decision and Control}, pp. 477--482.
+
+\bibitem{Kwang-KyoOh2011}
+{Kwang-Kyo Oh} and {Hyo-Sung Ahn}, \enquote{{Distance-based formation control
+  using Euclidean distance dynamics matrix: General cases},} \emph{Proceedings
+  of the 2011 American Control Conference}, pp. 4816--4821.
 
 \end{thebibliography}

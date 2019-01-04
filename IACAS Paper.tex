@@ -277,8 +277,8 @@ Applying the projection operator in conjunction with Lloyd's algorithm yields th
 
 As one can see, we added two more steps over the original Lloyd's algorithm - where we project the cell center of mass to the polygon that defines the area constraint (steps number 3-4), and then moving the agents to those points. Those step allows us to ensure that at least one agent will be \emph{on} the limiting polygon, thus we will have coverage within the constraint.
 
-\textcolor{red}{(you should refer explicitly to figure and explain what it is...)}
-\textcolor{red}{(I feel a lot of detail is missing here...)}
+%\textcolor{red}{(you should refer explicitly to figure and explain what it is...)}
+%\textcolor{red}{(I feel a lot of detail is missing here...)}
 \begin{figure}
 	\captionsetup[subfigure]{position=b}
 	\centering
@@ -490,9 +490,10 @@ TODO!
 In figure \ref{fig:results formation, no PLA}, we can see a simulation ran for 3 agents where a triangular formation was defined ($d_{12} = d_{13} = 1,\; d_{23} = 2$), and combined with Lloyd's algorithm with $\alpha = 0.5$. Comparing to figure \ref{fig:results no PLA}, which can be seen as the same simulation where $\alpha = 1$, it is clear that the agents are having a more triangular shape.
 
 \section{Concluding Remarks}
-%The Coverage Problem is well known and researched. This work provides a new approach for the common problem of not having enough sensors, and deals with it from a static point of view, while maintaining coverage on some constrained area.\\
-%The proposed solution is a simple control law which, under the work assumption, solves the problem. The simplicity of the control law, all together with the fact its stability, open the way for combining it with other control laws in some future work, which might lead to some interesting results. For example, combining this controller with a formation control controller, together with calculating the Voronoi in a distributed way, can lead to some interesting results for autonomous, dynamically changed swarms.
-%\textcolor{red}{add concluding statements - including idea of using formation control in work)}
+The deployment problem under different constraints is a well known and researched problem. This work provides a new approach for partial coverage problem. When some sub-range should be covered constantly, this work presents a sequential coverage strategy, jumping between tiles. The Projected Lloyd's Algorithm, presented in this work, guarantees at least partial coverage of this sub range. Another contribution of this work is the combination of Lloyd's algorithm with a distance-based formation controller to achieve some spatial properties.
+
+As the PLA is calculated in a centralized way, future work might include decentralizing its calculation. Future work might also include a condition for formation and deployment solution while maintaining some deployment and/or formation properties, as well as combining other types of formation controllers. Decentralizing the PLA, together with finding this condition, can lead to some interesting results for autonomous, dynamically changed swarms.
+
 \bibliography{bibliography}
 \bibliographystyle{iacas}
 \end{document}

@@ -217,7 +217,7 @@ While Voroni diagrams are useful for partitioning some existing range, CVT is a 
 	\captionsetup[subfigure]{position=b}
 	\centering
 	\subcaptionbox{Voronoi Diagram.}{\includegraphics[width=.48\linewidth]{figures/math-bg/voronoi.png}}\label{fig:voronoi:voronoi}
-	\subcaptionbox{Centroidal Voronoi Tessellations. The points represent the center of mass, calculated using the density function $\phi = 1$.}{\includegraphics[width=.48\linewidth]{figures/math-bg/cvt.png}\label{fig:voronoi:cvt}}
+	\subcaptionbox{Centroidal Voronoi Tessellations. The points represent the center of mass, calculated using the density function $\rho = 1$.}{\includegraphics[width=.48\linewidth]{figures/math-bg/cvt.png}\label{fig:voronoi:cvt}}
 	\caption{Illustration of Voronoi Diagram and a CVT, both from the same initial conditions}
 \label{fig:Voronoi_tessellation_illustration}
 \end{figure}
@@ -238,12 +238,38 @@ As mentioned above, the CVT's are very useful for locational optimization. Howev
 \end{algorithm}
 
 %\subsubsection*{Continuous-time Lloyd's Algorithm}
-Cortes et al. \cite{Cortes2004} proposed a control algorithm based on Lloyd's algorithm. According to \cite{Cortes2004}, let us define agent $i$ position as $p_i$ and the $i$'s partition centroid as $C_{V_{i}}$. Of course, this centroid is defined for some given density function, which allow us a degree of freedom in the calculations. For some proportional constant $k_{prop}$, the controller can be defined as:
-\begin{equation} \label{eq:Lloyds continuous time control}
-u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right).
-\end{equation} 
+Cortes et al. \cite{Cortes2004} proposed a control algorithm based on Lloyd's algorithm.
+Let us define a polygon $\mathcal{W} \subset \rsqr$. The basic deployment problem is finding a position $p \in \rsqr$ to maximize the coverage of the polygon $\mathcal{W}$. According to \cite{Cortes2004}, maximizing $$\mathcal{H}(p, \mathcal{W}) = \int_{\mathcal{W}} \norm{p-q}^2 dq$$ will yield the requested result.\br
+The function $\mathcal{H}(p, \mathcal{W})$ measures the distance between a point $p$ to any point $q \in \Omega$. In \cite{Cortes2004}, this problem was expanded to the case of $n$ points, such that each point $p_i$ represent the $i$'th sensor position, and we are looking for the best partition $(\mathcal{W}_1, \ldots, \mathcal{W}_n)$ such that the coverage is maximized. Now, the total cost function will be:
+\begin{equation}
+\mathcal{H}(P, \mathcal{W}) = \sum_{i=1}^n \int_{\mathcal{W}} \norm{p_i-q}^2 dq.
+\label{eq:vornoi cost function}
+\end{equation}
+The solution of this problem is the voronoi partition $\mathcal{V} = (V_1, \ldots, V_n)$.
 
-Cortes et al. \cite{Cortes2004} also proved that the controller~(\ref{eq:Lloyds continuous time control}) is locally asymptotic stable. It can be proved using the Direct Lyaponuv method, and the proof is given on \cite{Cortes2004}.
+The main challenge now is finding the points that maximize (\ref{eq:vornoi cost function}). According to \cite{Cortes2004}, when using Voronoi partitioning, (\ref{eq:vornoi cost function}) can be expressed as:
+\begin{equation}
+\mathcal{H}(P, \mathcal{V}) = \mathcal{H}_{\mathcal{V}}(P) = \int_{\Omega} \min_{i \in (1,\ldots, n)} \norm{p_i-q}^2 \phi(q) dq,
+\label{eq:vornoi assumptions cost function}
+\end{equation}
+where $\phi(q)$ represents a measure of information or probability that some event take place over $\Omega$. For the rest of the problem, and for the sake of simplicity, we assume that $\phi(q) = \rho(q) = 1$.
+
+It is possible to define the mass $M_{V_i}$ and the center of mass $C_{V_i}$ of the $i$'th Voronoi region:
+\begin{align*}
+M_{V_i} &= \int_{V_i} \rho(q)dq, \\
+C_{V_i} &= \frac{1}{M_{V_i}} \int_{V_i} q\rho(q)dq.
+\end{align*}
+Cortes et al. \cite{Cortes2004} showed that at least one of the solutions for the optimization of (\ref{eq:vornoi assumptions cost function}) is the CVT:
+\begin{equation}
+C_{V_i} = \arg\min_{p_i} \mathcal{H}_{\mathcal{V}}(p).
+\end{equation}
+
+Assuming that a sensor has integrator dynamics, i.e. for each sensor, $\dot{p}_i = u_i$, \cite{Cortes2004} shows a way to implement Lloyd's algorithm:
+
+\begin{equation} \label{eq:Lloyds continuous time control}
+u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right),
+\end{equation} 
+Where $k_{prop}$ is a positive constant. Cortes et al. \cite{Cortes2004} also proved that the controller~(\ref{eq:Lloyds continuous time control}) is locally asymptotic stable.
 
 
 \section{Proposed Solution}
@@ -292,18 +318,48 @@ In figure \ref{fig:projected lloyds algorithm}, the PLA results can be clearly s
 
 This algorithm can be also formed in a continuous time form, based of (\ref{LloydAlgo}): %\textcolor{red}{(please make sure notation is consistent!)}
 \begin{equation} \label{ProjectedLloydsContol}
-u_{i} = -k_{prop}\left( p_i - \textsc{proj}\left( C_{V_{i}} \right) \right).
+u_{i} = -k_{prop}\left( p_i - \textsc{proj}_{A_m}\left( C_{V_{i}} \right) \right).
 \end{equation}
 This continuous time controller, which is a modification of the controller proposed in \cite{Cortes2004}, is always converging into a solution where each tile intersects with $A_m$.
 
 %\subsubsection*{Stability of the Projected Lloyd's Algorithm}
 %\textcolor{red}{(text to setup theorem)}
+In \cite{Cortes2004}, it was proven that the controller (\ref{eq:Lloyds continuous time control}) converges asymptotically to a set of critical points. It was done using (\ref{eq:vornoi assumptions cost function}) as a Lyapunov candidate function, and then, using La'Salle principal, it was shown that the sensors converged into $C_{V_i}$.
 \begin{theorem}
 The controller proposed in (\ref{ProjectedLloydsContol}) is locally asymptotic stable.
 \end{theorem}
 
+%\textcolor{red}{please start by summarizing proof of Lloyd without projection}
 \begin{proof}
-\textcolor{red}{please start by summarizing proof of Lloyd without projection}
+Let us define a Voronoi partition moment of inertia:
+\begin{equation}
+J_{V,p} = \int_V \norm{q-p}^2 \rho(q)dq
+\end{equation}
+In \cite{Cortes2004} it was shown that:
+\begin{align*}
+\mathcal{H}_{\mathcal{V}}(P) &= \sum_{i=1}^n J_{V_i,C_{V_i}} + \sum_{i=1}^n M_{V_i} \norm{p_i - C_{V_i}}^2\\
+\frac{\partial \mathcal{H}_{\mathcal{V}}}{\partial p_i} &= 2M_{V_i}\left( p_i - C_{V_i} \right).
+\end{align*}
+Let us define $\Psi(C_v, A_m) = \textsc{proj}_{A_m}\left( C_{V_{i}} \right)$. 
+Let us propose a candidate Lyapunov function:
+\begin{equation}
+\mathcal{\mathcal{H}_{\mathcal{P}}}(P) = \sum_{i=1}^n J_{V_i,C_{V_i}} + \sum_{i=1}^n M_{V_i} \norm{p_i - \Psi(C_v, A_m)}^2,
+\end{equation}
+it follows that (\cite{Cortes2004}):
+\begin{equation}
+\frac{\partial \mathcal{H}_{\mathcal{P}}}{\partial p_i} = 2M_{V_i}\left( p_i - \Psi(C_v, A_m) \right).
+\end{equation}
+According to Lyapunov direct method, to prove asymptotical stability, one have to show:
+    \begin{itemize}
+        \item[(1)] $\mathcal{\mathcal{H}_{\mathcal{P}}}(0) = 0$,
+        \item[(2)] $\mathcal{\mathcal{H}_{\mathcal{P}}}(\zeta) > 0 \Leftrightarrow \zeta \neq 0$,
+        \item[(3)] $\dot{\mathcal{\mathcal{H}_{\mathcal{P}}}}(\zeta) < 0 \Leftrightarrow \zeta \neq 0$.
+    \end{itemize}
+Conditions 1,2 are direct from the definition of  $\dot{\mathcal{\mathcal{H}_{\mathcal{P}}}}(P)$.\br
+As for condition 3, it is possible to see \cite{Cortes2004}:
+\begin{equation*}
+\frac{\partial \mathcal{H}_{\mathcal{P}}}{\partial p_i} = -2k_{prop} \sum_{i=1}^n M_{V_i} \norm{p_i - \Psi(C_v, A_m)}^2 < 0.
+\end{equation*}
 \end{proof}
 
 One can notice a major difference between PLA and Loyd's algorithm - while Lloyd's algorithm converges into some local minima, the PLA is different type of partitioning, which is not necessary optimal.
@@ -439,7 +495,7 @@ There are few interesting results regarding this controller.
 \begin{proof}
     First of all, let us show that $P = C_{V}$ is an equilibrium point of \eqref{eq:Combined Controller}.  Indeed, by assumption, we have $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$, so $\norm{p_{i} - p_{j}}^{2} = \norm{C_{V_{i}} - C_{V_{j}}}^{2} =d_{ij}^{2}$, showing $P = C_{V}$ is an equilibrium point. \br
 
-    Now we're ready to prove that this equilibrium is stable. Let us choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
+    Now we are ready to prove that this equilibrium is stable. Let us choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
     \begin{equation}
         V_{c}\left(P\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}} \min_{i\in \left\{1,\ldots, n\right\}} \norm{q-p_{i}}^2\phi(q)dq \right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (P)\sigma(P) \right],
         \label{Proposition 1 Lyapunov function candidate}

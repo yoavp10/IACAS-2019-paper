@@ -411,13 +411,13 @@ where $p$ is the positions of the agents in a configuration $c$, and $\sigma = \
 
 A proposed controller is a gradient-dynamics based controller \cite{Kwang-KyoOh2011,Krick2008}:
 \begin{equation}
-\dot{p} = -\nabla F(p) = -R(p)^{T} R(p) p - R(p)^{T}D^2
+\dot{p} = -\nabla F(p) = -R(p)^{T} R(p) p - R(p)^{T}D^2,
 \label{eq:distance formation controller}
 \end{equation}
 Where $D^2 = \{d_1^2, \ldots, d_{|\mathcal{E}|}^2\}$. The controller is also related to the rigidity matrix!\\
 The controller can be also defined for each individual agent. If $d_{ij}$ is the required distance between agents $i,j$ (that is the required distance assigned to the edge $ek = \{v_i, v_j\}$), then:
 \begin{equation}
-    \dot{p_{i}} = -\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)
+    \dot{p_{i}} = -\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right),
     \label{eq:distance formation controller for individual agent}
 \end{equation}
 It can be shown that this controller is locally asymptomatic stable \cite{Kwang-KyoOh2011,Krick2008}.
@@ -426,7 +426,7 @@ It can be shown that this controller is locally asymptomatic stable \cite{Kwang-
 In this section, a combined deployment and formation controller will be shown. As both (\ref{eq:Lloyds continuous time control}) and (\ref{eq:distance formation controller}) are locally asymptomatic stable gradient descent controllers, it might be possible to combine them. Let us define a coefficient $0 \leq \alpha \leq 1$. The proposed controller:
 \begin{equation}
     u_{i} = \dot{p_{i}} = \alpha \left(-k_{p}\left( p_i -C_{V_{i}} \right)\right) +
-    \left( 1-\alpha \right)\left[-\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)  \right] 
+    \left( 1-\alpha \right)\left[-\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)  \right].
     \label{eq:Combined Controller}
 \end{equation}
 There are few interesting results regarding this controller.
@@ -441,38 +441,39 @@ There are few interesting results regarding this controller.
 
     Now we're ready to prove that this equilibrium is stable. Let us choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}:
     \begin{equation}
-        V_{c}\left(P\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}} \min_{i\in \left\{1,\ldots, n\right\}} \norm{q-p_{i}}^2\phi(q)dq \right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (P)\sigma(P) \right]
+        V_{c}\left(P\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}} \min_{i\in \left\{1,\ldots, n\right\}} \norm{q-p_{i}}^2\phi(q)dq \right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (P)\sigma(P) \right],
         \label{Proposition 1 Lyapunov function candidate}
     \end{equation}
     where $\sigma_{i} = \sum_{i \sim j}\norm{p_{i} - p_{j}}^{2} - d_{ij}^2$, $\sigma(P) = \begin{bmatrix} \sigma_{1} && \ldots && \sigma_{n} \end{bmatrix}^{T}$ and $ J_{V_{i},C_{V_{i}}}, M_{V_{i}}$ are as defined in \cite{Cortes2004}.
 
     since the equilibrium point is $P = C_{v}$, we will change the variables, so $\zeta = P - C_{V}$, hence:
     \begin{equation}
-        V_{c}\left(\zeta\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}}\min_{i\in \left\{1,\ldots, n\right\}} \norm{q-\zeta_{i} - C_{V_{i}}}^2 \phi(q) dq\right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (\zeta + C_{V_{i}})\sigma(\zeta + C_{V_{i}}) \right]
+        V_{c}\left(\zeta\right) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}}\min_{i\in \left\{1,\ldots, n\right\}} \norm{q-\zeta_{i} - C_{V_{i}}}^2 \phi(q) dq\right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (\zeta + C_{V_{i}})\sigma(\zeta + C_{V_{i}}) \right].
     \end{equation}
     
     According to Lyapunov direct method, to prove asymptotical stability, one have to show:
     \begin{itemize}
-        \item[(1)] $V_{C}(0) = 0$
-        \item[(2)] $V_{C}(\zeta) > 0 \Leftrightarrow \zeta \neq 0$
-        \item[(3)] $\dot{V}_{C}(\zeta) < 0$
+        \item[(1)] $V_{C}(0) = 0$,
+        \item[(2)] $V_{C}(\zeta) > 0 \Leftrightarrow \zeta \neq 0$,
+        \item[(3)] $\dot{V}_{C}(\zeta) < 0$.
     \end{itemize}
 For condition (1), $V_{C}(0) = \alpha\left[ \sum_{i=1}^{n} \int_{V_{i}}\min_{i\in \left\{1,\ldots, n\right\}} \norm{q- C_{V_{i}}}^2 \phi(q) dq\right] + (1-\alpha) \left[ \frac{1}{4}\sigma ^{t} (C_{V_{i}})\sigma(C_{V_{i}}) \right] $ \cite{Cortes2004}.\br
     While it is obvious that $\sigma(C_{V_{i}}) = 0$, we have to look into the first term of the Lyapunov function. It is obvious that there is a minimum at $C_{V}$, therefore the integral gets him minimal value over there. Moreover, since the function we are minimizing is for the form $f(x) = x^{2}$, the minimum is $0$. Therefore, condition $(1)$ applies. \br
 For condition (2), it's obvious that both terms are strictly positive for $\zeta \neq 0$.\br
 For condition (3), the combined derivative of the combined Lyapunov function is \cite{Cortes2004}:
     \begin{equation}
-        \dot{V}_{C}(\zeta) = \alpha \left[ -2k_{p}\sum_{i=1}^{n}M_{V_{i}}\norm{p_{i} - C_{V_{i}}}^{2} \right] + (1-\alpha)\left[ -\sigma(P)^{T}R(p)R^{T}(p)\sigma(P) \right] \leq 0
+        \dot{V}_{C}(\zeta) = \alpha \left[ -2k_{p}\sum_{i=1}^{n}M_{V_{i}}\norm{p_{i} - C_{V_{i}}}^{2} \right] + (1-\alpha)\left[ -\sigma(P)^{T}R(p)R^{T}(p)\sigma(P) \right] \leq 0.
     \end{equation}
     As we can see, this term is smaller \emph{or equal} to zero. Therefore, using Lyapunov method, this system is stable, however not asymptotically stable. That said, we can notice that the set $S = \left\{ P = C_{V} \right\}$ doesn't contain any trivial trajectory apart from the trivial trajectory (when $\zeta = 0$), therefore by LaSalle principal, the system is Locally asymptotic stable.
 \end{proof}
 
 \begin{theorem}
-The controller (\ref{eq:Combined Controller}) is locally asymptotically stable.
+The dynamic system described by the controller (\ref{eq:Combined Controller}) asymptotically converges to a critical point of the function $G(p) = \alpha \mathcal{H}_{\mathcal{V}}(p) + (1-\alpha) F(p)$, where $F(p)$ is the distance-based formation controller (\ref{eq:distance formation controller})  potential, and $\mathcal{H}_{\mathcal{V}}(p)$ is the Voronoi-based deployment controller (\ref{eq:Lloyds continuous time control}) potential function\cite{Cortes2004}.
     \label{theorem: combined controller stability}
 \end{theorem}
 \begin{proof}
-TODO!
+Both the formation control and the deployment controller can be expressed as a gradient dynamics system. It is
+known that gradient flows converge to the critical points of the potential function.
 \end{proof}
 
 %\subsection{The Combination and Problem \ref{GeneralProblem}}

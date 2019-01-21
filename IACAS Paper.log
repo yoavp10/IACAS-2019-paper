@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.26)  21 JAN 2019 00:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.26)  21 JAN 2019 23:47
 entering extended mode
 **"./IACAS Paper.tex"
 ("IACAS Paper.tex"
@@ -869,54 +869,54 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
  [1
 
 {C:/Users/yoavp/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 100--110
+Underfull \hbox (badness 10000) in paragraph at lines 102--112
 
  []
 
-<figures/problem-def/sensor-and-coverage.png, id=107, 258.9675pt x 188.20313pt>
+<figures/problem-def/sensor-and-coverage.png, id=106, 258.9675pt x 188.20313pt>
 
 File: figures/problem-def/sensor-and-coverage.png Graphic file (type png)
 <use figures/problem-def/sensor-and-coverage.png>
 Package pdftex.def Info: figures/problem-def/sensor-and-coverage.png  used on i
-nput line 119.
+nput line 121.
 (pdftex.def)             Requested size: 155.38168pt x 112.92273pt.
 [2 <./figures/problem-def/sensor-and-coverage.png>]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 139.
-<figures/problem-def/config-1.png, id=124, 368.1253pt x 283.0575pt>
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+<figures/problem-def/config-1.png, id=123, 368.1253pt x 283.0575pt>
 File: figures/problem-def/config-1.png Graphic file (type png)
 <use figures/problem-def/config-1.png>
 Package pdftex.def Info: figures/problem-def/config-1.png  used on input line 1
-51.
+53.
 (pdftex.def)             Requested size: 135.89174pt x 104.49207pt.
-<figures/problem-def/config-2.png, id=125, 346.29375pt x 359.09157pt>
+<figures/problem-def/config-2.png, id=124, 346.29375pt x 359.09157pt>
 File: figures/problem-def/config-2.png Graphic file (type png)
 <use figures/problem-def/config-2.png>
 Package pdftex.def Info: figures/problem-def/config-2.png  used on input line 1
-57.
+59.
 (pdftex.def)             Requested size: 135.89174pt x 140.91635pt.
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 172.
-<figures/problem-def/partitioning.png, id=129, 379.4175pt x 190.46156pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 174.
+<figures/problem-def/partitioning.png, id=128, 379.4175pt x 190.46156pt>
 File: figures/problem-def/partitioning.png Graphic file (type png)
 <use figures/problem-def/partitioning.png>
 Package pdftex.def Info: figures/problem-def/partitioning.png  used on input li
-ne 179.
+ne 181.
 (pdftex.def)             Requested size: 151.7643pt x 76.18326pt.
  [3 <./figures/problem-def/config-1.png> <./figures/problem-def/config-2.png> <
 ./figures/problem-def/partitioning.png>]
-<figures/math-bg/voronoi.png, id=154, 421.575pt x 316.18124pt>
+<figures/math-bg/voronoi.png, id=151, 421.575pt x 316.18124pt>
 File: figures/math-bg/voronoi.png Graphic file (type png)
 <use figures/math-bg/voronoi.png>
-Package pdftex.def Info: figures/math-bg/voronoi.png  used on input line 228.
+Package pdftex.def Info: figures/math-bg/voronoi.png  used on input line 230.
 (pdftex.def)             Requested size: 217.42265pt x 163.06914pt.
-<figures/math-bg/cvt.png, id=155, 421.575pt x 316.18124pt>
+<figures/math-bg/cvt.png, id=152, 421.575pt x 316.18124pt>
 File: figures/math-bg/cvt.png Graphic file (type png)
 <use figures/math-bg/cvt.png>
-Package pdftex.def Info: figures/math-bg/cvt.png  used on input line 229.
+Package pdftex.def Info: figures/math-bg/cvt.png  used on input line 231.
 (pdftex.def)             Requested size: 217.42265pt x 163.06914pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 239.
+put line 241.
  [4] [5 <./figures/math-bg/voronoi.png (PNG copy)> <./figures/math-bg/cvt.png (
 PNG copy)>]
 Package epstopdf Info: Source file: <figures/proposed-sol/proj-lloyds-off.eps>
@@ -928,15 +928,15 @@ onverted-to.pdf>
 (epstopdf)                    size: 24921 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/proj-l
 loyds-off-eps-converted-to.pdf figures/proposed-sol/proj-lloyds-off.eps>
-(epstopdf)             \includegraphics on input line 327.
+(epstopdf)             \includegraphics on input line 328.
 Package epstopdf Info: Output file is already uptodate.
-<figures/proposed-sol/proj-lloyds-off-eps-converted-to.pdf, id=198, 421.575pt x
+<figures/proposed-sol/proj-lloyds-off-eps-converted-to.pdf, id=196, 421.575pt x
  316.18124pt>
 File: figures/proposed-sol/proj-lloyds-off-eps-converted-to.pdf Graphic file (t
 ype pdf)
 <use figures/proposed-sol/proj-lloyds-off-eps-converted-to.pdf>
 Package pdftex.def Info: figures/proposed-sol/proj-lloyds-off-eps-converted-to.
-pdf  used on input line 327.
+pdf  used on input line 328.
 (pdftex.def)             Requested size: 217.42265pt x 163.06914pt.
 Package epstopdf Info: Source file: <figures/proposed-sol/proj-lloyds-on.eps>
 (epstopdf)                    date: 2018-12-08 14:50:03
@@ -947,138 +947,165 @@ nverted-to.pdf>
 (epstopdf)                    size: 23379 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/proj-l
 loyds-on-eps-converted-to.pdf figures/proposed-sol/proj-lloyds-on.eps>
-(epstopdf)             \includegraphics on input line 328.
+(epstopdf)             \includegraphics on input line 329.
 Package epstopdf Info: Output file is already uptodate.
-<figures/proposed-sol/proj-lloyds-on-eps-converted-to.pdf, id=199, 421.575pt x 
+<figures/proposed-sol/proj-lloyds-on-eps-converted-to.pdf, id=197, 421.575pt x 
 316.18124pt>
 File: figures/proposed-sol/proj-lloyds-on-eps-converted-to.pdf Graphic file (ty
 pe pdf)
 <use figures/proposed-sol/proj-lloyds-on-eps-converted-to.pdf>
 Package pdftex.def Info: figures/proposed-sol/proj-lloyds-on-eps-converted-to.p
-df  used on input line 328.
+df  used on input line 329.
 (pdftex.def)             Requested size: 217.42265pt x 163.06914pt.
  [6] [7 <./figures/proposed-sol/proj-lloyds-off-eps-converted-to.pdf> <./figure
 s/proposed-sol/proj-lloyds-on-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <figures/proposed-sol/results/sim1-3agents-
 3partitions-noPLA.eps>
-(epstopdf)                    date: 2018-12-09 22:20:29
-(epstopdf)                    size: 41735 bytes
+(epstopdf)                    date: 2019-01-21 19:59:12
+(epstopdf)                    size: 38344 bytes
 (epstopdf)             Output file: <figures/proposed-sol/results/sim1-3agents-
 3partitions-noPLA-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-12-24 00:16:22
-(epstopdf)                    size: 37748 bytes
+(epstopdf)                    date: 2019-01-21 20:01:00
+(epstopdf)                    size: 34697 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/result
 s/sim1-3agents-3partitions-noPLA-eps-converted-to.pdf figures/proposed-sol/resu
 lts/sim1-3agents-3partitions-noPLA.eps>
-(epstopdf)             \includegraphics on input line 416.
+(epstopdf)             \includegraphics on input line 418.
 Package epstopdf Info: Output file is already uptodate.
 <figures/proposed-sol/results/sim1-3agents-3partitions-noPLA-eps-converted-to.p
-df, id=249, 563.10374pt x 172.645pt>
+df, id=246, 563.10374pt x 172.645pt>
 File: figures/proposed-sol/results/sim1-3agents-3partitions-noPLA-eps-converted
 -to.pdf Graphic file (type pdf)
 <use figures/proposed-sol/results/sim1-3agents-3partitions-noPLA-eps-converted-
 to.pdf>
 Package pdftex.def Info: figures/proposed-sol/results/sim1-3agents-3partitions-
-noPLA-eps-converted-to.pdf  used on input line 416.
+noPLA-eps-converted-to.pdf  used on input line 418.
 (pdftex.def)             Requested size: 450.48361pt x 138.11617pt.
 
 [8]
 Package epstopdf Info: Source file: <figures/proposed-sol/results/sim2-3agents-
 3partitions-PLA.eps>
-(epstopdf)                    date: 2018-12-09 23:25:04
-(epstopdf)                    size: 40579 bytes
+(epstopdf)                    date: 2019-01-21 19:59:45
+(epstopdf)                    size: 37886 bytes
 (epstopdf)             Output file: <figures/proposed-sol/results/sim2-3agents-
 3partitions-PLA-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-12-24 00:16:52
-(epstopdf)                    size: 35247 bytes
+(epstopdf)                    date: 2019-01-21 20:01:01
+(epstopdf)                    size: 33262 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/result
 s/sim2-3agents-3partitions-PLA-eps-converted-to.pdf figures/proposed-sol/result
 s/sim2-3agents-3partitions-PLA.eps>
-(epstopdf)             \includegraphics on input line 425.
+(epstopdf)             \includegraphics on input line 427.
 Package epstopdf Info: Output file is already uptodate.
 <figures/proposed-sol/results/sim2-3agents-3partitions-PLA-eps-converted-to.pdf
-, id=257, 562.1pt x 171.64125pt>
+, id=256, 562.1pt x 171.64125pt>
 File: figures/proposed-sol/results/sim2-3agents-3partitions-PLA-eps-converted-t
 o.pdf Graphic file (type pdf)
 <use figures/proposed-sol/results/sim2-3agents-3partitions-PLA-eps-converted-to
 .pdf>
 Package pdftex.def Info: figures/proposed-sol/results/sim2-3agents-3partitions-
-PLA-eps-converted-to.pdf  used on input line 425.
+PLA-eps-converted-to.pdf  used on input line 427.
 (pdftex.def)             Requested size: 449.68062pt x 137.31316pt.
  [9 <./figures/proposed-sol/results/sim1-3agents-3partitions-noPLA-eps-converte
 d-to.pdf> <./figures/proposed-sol/results/sim2-3agents-3partitions-PLA-eps-conv
 erted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 514--515
-
+Overfull \hbox (3.12648pt too wide) in paragraph at lines 489--491
+\OT1/ptm/m/n/12 where $\OML/cmm/m/it/12 P$ \OT1/ptm/m/n/12 is the po-si-tions v
+ec-tor of the agents in a con-fig-u-ra-tion $\OML/cmm/m/it/12 c$\OT1/ptm/m/n/12
+ , and $\OML/cmm/m/it/12 \OT1/cmr/m/n/12 (\OML/cmm/m/it/12 P\OT1/cmr/m/n/12 ) 
+= [] \OML/cmm/m/it/12 ;  [] \OT1/cmr/m/n/12 =
  []
 
 [10]
-Overfull \hbox (22.78712pt too wide) in paragraph at lines 534--538
-\OT1/ptm/m/n/12 For con-di-tion (1), $\OML/cmm/m/it/12 V[]\OT1/cmr/m/n/12 (0) =
- \OML/cmm/m/it/12  [] \OT1/cmr/m/n/12 + (1 \OMS/cmsy/m/n/12   \OML/cmm/m/it/12
- \OT1/cmr/m/n/12 ) []$
+Underfull \hbox (badness 10000) in paragraph at lines 520--521
+
  []
 
 [11]
 Package epstopdf Info: Source file: <figures/proposed-sol/results/sim3-3agents-
 3partitions-noPLA-formation.eps>
-(epstopdf)                    date: 2018-12-09 23:40:10
-(epstopdf)                    size: 40580 bytes
+(epstopdf)                    date: 2019-01-21 20:00:04
+(epstopdf)                    size: 37861 bytes
 (epstopdf)             Output file: <figures/proposed-sol/results/sim3-3agents-
 3partitions-noPLA-formation-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-12-30 00:30:22
-(epstopdf)                    size: 36547 bytes
+(epstopdf)                    date: 2019-01-21 20:01:02
+(epstopdf)                    size: 34482 bytes
 (epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/result
 s/sim3-3agents-3partitions-noPLA-formation-eps-converted-to.pdf figures/propose
 d-sol/results/sim3-3agents-3partitions-noPLA-formation.eps>
-(epstopdf)             \includegraphics on input line 560.
+(epstopdf)             \includegraphics on input line 566.
 Package epstopdf Info: Output file is already uptodate.
 <figures/proposed-sol/results/sim3-3agents-3partitions-noPLA-formation-eps-conv
-erted-to.pdf, id=322, 562.1pt x 171.64125pt>
+erted-to.pdf, id=324, 562.1pt x 171.64125pt>
 File: figures/proposed-sol/results/sim3-3agents-3partitions-noPLA-formation-eps
 -converted-to.pdf Graphic file (type pdf)
 <use figures/proposed-sol/results/sim3-3agents-3partitions-noPLA-formation-eps-
 converted-to.pdf>
 Package pdftex.def Info: figures/proposed-sol/results/sim3-3agents-3partitions-
-noPLA-formation-eps-converted-to.pdf  used on input line 560.
+noPLA-formation-eps-converted-to.pdf  used on input line 566.
 (pdftex.def)             Requested size: 449.68062pt x 137.31316pt.
- ("IACAS Paper.bbl" [12 <./figures/proposed-sol/results/sim3-3agents-3partition
-s-noPLA-formation-eps-converted-to.pdf>]) [13] [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 574.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 574.
- ("IACAS Paper.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 574.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 574.
+Package epstopdf Info: Source file: <figures/proposed-sol/results/sim4-3agents-
+3partitions-PLA-formation.eps>
+(epstopdf)                    date: 2019-01-21 20:00:32
+(epstopdf)                    size: 37399 bytes
+(epstopdf)             Output file: <figures/proposed-sol/results/sim4-3agents-
+3partitions-PLA-formation-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-01-21 23:43:22
+(epstopdf)                    size: 33300 bytes
+(epstopdf)             Command: <epstopdf --outfile=figures/proposed-sol/result
+s/sim4-3agents-3partitions-PLA-formation-eps-converted-to.pdf figures/proposed-
+sol/results/sim4-3agents-3partitions-PLA-formation.eps>
+(epstopdf)             \includegraphics on input line 574.
+Package epstopdf Info: Output file is already uptodate.
+<figures/proposed-sol/results/sim4-3agents-3partitions-PLA-formation-eps-conver
+ted-to.pdf, id=327, 562.1pt x 171.64125pt>
+File: figures/proposed-sol/results/sim4-3agents-3partitions-PLA-formation-eps-c
+onverted-to.pdf Graphic file (type pdf)
+<use figures/proposed-sol/results/sim4-3agents-3partitions-PLA-formation-eps-co
+nverted-to.pdf>
+Package pdftex.def Info: figures/proposed-sol/results/sim4-3agents-3partitions-
+PLA-formation-eps-converted-to.pdf  used on input line 574.
+(pdftex.def)             Requested size: 449.68062pt x 137.31316pt.
+ [12 <./figures/proposed-sol/results/sim3-3agents-3partitions-noPLA-formation-e
+ps-converted-to.pdf>] ("IACAS Paper.bbl" [13 <./figures/proposed-sol/results/si
+m4-3agents-3partitions-PLA-formation-eps-converted-to.pdf>]) [14]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 590.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 590.
+
+("IACAS Paper.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 590.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 590.
 Package rerunfilecheck Info: File `"IACAS Paper".out' has not changed.
 (rerunfilecheck)             Checksum: B194180B2F7AB13B40D4C9AF6437C61B;1188.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 574.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 590.
  ) 
 Here is how much of TeX's memory you used:
- 20586 strings out of 492973
- 388982 string characters out of 3135932
- 460894 words of memory out of 3000000
- 23986 multiletter control sequences out of 15000+200000
- 33493 words of font info for 82 fonts, out of 3000000 for 9000
+ 20602 strings out of 492973
+ 389577 string characters out of 3135932
+ 459896 words of memory out of 3000000
+ 23996 multiletter control sequences out of 15000+200000
+ 34421 words of font info for 85 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,11n,54p,1380b,543s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,11n,54p,1087b,543s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-r10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program
- Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/urw/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8
-a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program
- Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "IACAS Paper.pdf" (14 pages, 454160 bytes).
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/urw/times/utmri8a.pfb>
+Output written on "IACAS Paper.pdf" (14 pages, 497050 bytes).
 PDF statistics:
- 420 PDF objects out of 1000 (max. 8388607)
- 88 named destinations out of 1000 (max. 500000)
- 196 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 441 PDF objects out of 1000 (max. 8388607)
+ 90 named destinations out of 1000 (max. 500000)
+ 201 words of extra memory for PDF output out of 10000 (max. 10000000)
 

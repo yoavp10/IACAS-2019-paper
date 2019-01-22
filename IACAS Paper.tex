@@ -286,7 +286,7 @@ Assuming that a sensor has integrator dynamics, i.e., for each sensor, $\dot{p}_
 \begin{equation} \label{eq:Lloyds continuous time control}
 u_{i} = -k_{prop}\left( p_i - C_{V_{i}} \right),
 \end{equation} 
-where $k_{prop}$ is a positive constant. Note that the dynamics in (\ref{eq:Lloyds continuous time control}), which minimizing (\ref{eq:Lloyds optimization function}), is a gradient dynamical system, and Cortes et al. \cite{Cortes2004} proved that the controller~(\ref{eq:Lloyds continuous time control}) is locally asymptotic stable.
+where $k_{prop}$ is a positive constant. Note that the dynamics in (\ref{eq:Lloyds continuous time control}), which minimizing (\ref{eq:Lloyds optimization function}), is a gradient dynamical system, and Cortes et al. \cite{Cortes2004} proved that the controller~(\ref{eq:Lloyds continuous time control}) is locally asymptotically stable.
 
 %\textcolor{red}{(I think you should still mention the relation of above to gradient controllers)}
 
@@ -334,7 +334,7 @@ As one can see, two more steps were added to the original Lloyd's algorithm - wh
 In Figure \ref{fig:projected lloyds algorithm}, the PLA results can be clearly seen. For the same initial condition, Figure \ref{fig:projected lloyds algorithm}(a), it can be clearly seen that only 3 (out of 10 tiles) intersects with $A_m$. In Figure \ref{fig:projected lloyds algorithm}(b), the PLA algorithm was activated and all tiles intersect with $A_m$.
 
 This algorithm can be also formed in a continuous time form, based on (\ref{LloydAlgo}), %\textcolor{red}{(please make sure notation is consistent!)}
-\begin{equation} \label{ProjectedLloydsContol}
+\begin{equation} \label{eq:PLA continuous time controller}
 u_{i} = -k_{prop}\left( p_i - \textsc{proj}_{A_m}\left( C_{V_{i}} \right) \right).
 \end{equation}
 This continuous time controller, which is a modification of the controller proposed in \cite{Cortes2004}, is always converging into a solution where each tile intersects with $A_m$.
@@ -343,14 +343,14 @@ This continuous time controller, which is a modification of the controller propo
 %\textcolor{red}{(text to setup theorem)}
 In \cite{Cortes2004}, it was proven that the controller (\ref{eq:Lloyds continuous time control}) converges asymptotically to a set of critical points. It was done using (\ref{eq:vornoi assumptions cost function}) as a Lyapunov candidate function, and then, using La'Salle's invariance principal, it was shown that the sensors converged into $C_{V_i}$.  We employ this same idea to show the convergence of the projected Lloyd's algorithm.
 \begin{theorem}
-The controller proposed in (\ref{ProjectedLloydsContol}) is locally asymptotic stable.
+The controller proposed in (\ref{eq:PLA continuous time controller}) is locally asymptotically stable.
 \end{theorem}
 
 %\textcolor{red}{please start by summarizing proof of Lloyd without projection}
 \begin{proof}
 Let us define a Voronoi partition moment of inertia:
 \begin{equation}
-J_{V,p} = \int_V \norm{q-p}^2 \rho(q)dq
+J_{V,p} = \int_V \norm{q-p}^2 \rho(q)dq.
 \end{equation}
 In \cite{Cortes2004} it was shown that:
 \begin{align*}
@@ -362,6 +362,7 @@ Let us define $\Psi(C_v, A_m) = \textsc{proj}_{A_m}\left( C_{V_{i}} \right)$. We
 Let us propose a candidate Lyapunov function:
 \begin{equation}
 \mathcal{\mathcal{H}_{\mathcal{P}}}(P) = \sum_{i=1}^n J_{V_i,C_{V_i}} + \sum_{i=1}^n M_{V_i} \norm{p_i - \Psi(C_v, A_m)}^2,
+\label{eq:PLA potential function}
 \end{equation}
 it follows that \cite{Cortes2004}:
 \begin{equation}
@@ -440,10 +441,12 @@ In this section, a short mathematical background will be given, following by thi
 
 \subsubsection{Mathematical Background}
 A graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ is a pair of two finite sets - the \emph{vertices} (nodes) set $V$ ($|V| = n$), and edges $\mathcal{E} \subseteq V\times V$. Each vertex can represent a mathematical or physical entity, for example - a sensor. Each edge represents some relation between two entities, for example - communication connectivity or congruent sensing range.
-Given a configuration as defined in (\ref{eq:configuration definition}), we can define the \emph{connectivity graph} \cite{Muhammad2006}. A pair $\{\mathcal{G}, c\}$ mapping between a graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ and a configuration $c$ is called a \emph{framework}. In \cite{Roth1979}, the properties of frameworks are defined, and the most important definition for this work is given - a \emph{minimally infinitesimally rigid framework} (MIR). In \cite{Muhammad2006} the formal definitions are given.\br
-In brief, a framework is \emph{rigid} if every motion creates a new framework that maintains the connectivity graph $\mathcal{G}$ unchanged (in both terms of connections and distance between graph nodes). \emph{minimally rigid framework} is a rigid framework such that the removal of each edge in $\mathcal{G}$ will result in a non-rigid framework. A \emph{infinitesimally rigid framework} is a framework that maintains its rigidity for each infinitesimal movement of the framework nodes. A framework is MIR if it is infinitesimally rigid and minimally rigid.% \textcolor{red}{(but you did not give the definition in this work!)}.
+Given a configuration as defined in (\ref{eq:configuration definition}), we can define the \emph{connectivity graph} \cite{Muhammad2006}. A pair $\{\mathcal{G}, c\}$ mapping between a graph $\mathcal{G} = \left(V, \mathcal{E}\right)$ and a configuration $c$ is called a \emph{framework}. In \cite{Roth1979}, the properties of frameworks are defined, and the most important definition for this work is given - a \emph{minimally infinitesimally rigid framework} (MIR). In \cite{Muhammad2006} the formal definitions are given.
+In brief, a framework is \emph{rigid} if every motion creates a new framework that maintains the connectivity graph $\mathcal{G}$ unchanged (in both terms of connections and distance between graph nodes). A \emph{minimally rigid framework} is a rigid framework such that the removal of any edge in $\mathcal{G}$ will result in a non-rigid framework. An \emph{infinitesimally rigid framework} is a framework that maintains its rigidity for each infinitesimal movement of the framework nodes. A framework is \emph{minimially infinitesimally rigid} (MIR) if it is infinitesimally rigid and minimally rigid.% \textcolor{red}{(but you did not give the definition in this work!)}.
 
 A useful mathematical tool in this regard is the \emph{rigidity matrix} (complete definition can be found on \cite{Krick2008}). For this work, it will be marked as $R(c) \in \mathbb{R}^{|\mathcal{E}| \times 2|\mathcal{V}|}$. For example, \emph{a framework is infinitesimally rigid if and only if $\mathbf{rk}\left[R\right] = 2|\mathcal{V} | -3 = |\mathcal{E}|$} \cite{Tay1984}. As a result, MIR frameworks have full row rank.
+
+Rigidity theory has emerged as the proper tool for solving distributed formation control problems.  It provides a theory for both defining shapes based on inter-agent distances, and deriving distributed control laws that can be used to attain these shapes. This is discussed in the sequel. 
 %\textcolor{red}{(you need to provide, in basic words, a definition of what rigidity means, and then emphasize it can be checked using the rigidity matrix via a rank condition, and point the reader to relevant references for more detail)}
 
 \begin{comment}
@@ -482,42 +485,42 @@ A complete definition the \emph{rigidity matrix} can be found in \cite{Krick2008
 \end{comment}
 
 \subsubsection{Distance-Based Formation Controller}
-Let us define a framework $\left\{\mathcal{G}, c \right\}$. The graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a connectivity graph, and we also define the vector $D = \left[d_1, \ldots, d_{|\mathcal{E}|}\right]$ as the required length of each edge of the graph, while the actual length is given by $\norm{p_i-p_j}=\norm{e_k},\; e_k =(v_i,v_j) \in \mathcal{E}$. We can now define a \emph{formation potential} of a framework:
+Let us define a framework $\left\{\mathcal{G}, c \right\}$. The graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ is a connectivity graph, and we also define the vector $D = \left[d_1, \ldots, d_{|\mathcal{E}|}\right]^T$ as the required length of each edge of the graph, while the actual length is given by $\norm{p_i-p_j}=\norm{e_k},\; e_k =(v_i,v_j) \in \mathcal{E}$. We can now define a \emph{formation potential} of a framework:
 \begin{equation}
 F(P) = \frac{1}{4}\sum_{k=1}^{\varepsilon}\left( \norm{e_k}^2 - d_{k}^{2} \right)^2 = \frac{1}{4}\sum_{k=1}^{\varepsilon} \sigma(p_i)_k^2 = \frac{1}{4}\sigma(P)^T \sigma(P),
 \label{eq:formation potential}
 \end{equation}
 where $P$ is the positions vector of the agents in a configuration $c$, and $\sigma(P) = \left[\sigma_1, \ldots \sigma_\mathcal{E} \right], \; \sigma_{p_i} = \norm{e_i^2 - d_{i}^{2}}$.
-
+%
 A proposed controller is a gradient-dynamics based controller \cite{Kwang-KyoOh2011,Krick2008}:
 \begin{equation}
 \dot{p} = -\nabla F(p) = -R(p)^{T} R(p) p - R(p)^{T}D^2,
 \label{eq:distance formation controller}
 \end{equation}
-where $D^2 = \left[d_1^2, \ldots, d_{|\mathcal{E}|}^2\right]$%\textcolor{red}{(you defined $D$ already above - but as a set and not a vector - please correct)}. %The controller is also related to the rigidity matrix!\\
+where $D^2 = \left[d_1^2, \ldots, d_{|\mathcal{E}|}^2\right]^T$. %\textcolor{red}{(you defined $D$ already above - but as a set and not a vector - please correct)}. %The controller is also related to the rigidity matrix!\\
 The controller can be also defined for each individual agent. If $d_{ij}$ is the required distance between agents $i,j$ (that is the required distance assigned to the edge $e_k = \{v_i, v_j\}$), then
 \begin{equation}
     \dot{p_{i}} = -\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right).
     \label{eq:distance formation controller for individual agent}
 \end{equation}
-Being a gradient dynamical system, it can be shown that this controller is locally asymptomatic stable if it has full row rank (that is, the framework is MIR) \cite{Kwang-KyoOh2011,Krick2008}.
+Being a gradient dynamical system, it can be shown that this controller is locally asymptotically stable if it has full row rank (that is, the framework is MIR) \cite{Kwang-KyoOh2011,Krick2008}.
 
 \subsection{Combining Distance-Based Formation Control and Lloyd's Algorithm}
-In this section, a combined deployment and formation controller will be shown. As both (\ref{eq:Lloyds continuous time control}) and (\ref{eq:distance formation controller}) are locally asymptomatic stable gradient descent controllers, it might be possible to combine them. Let us define a coefficient $0 \leq \alpha \leq 1$. The proposed controller for each agent is then
+In this section, a combined deployment and formation controller will be shown. As both (\ref{eq:Lloyds continuous time control}) and (\ref{eq:distance formation controller}) are locally asymptotically stable gradient descent controllers, it might be possible to combine them. Let us define a coefficient $0 \leq \alpha \leq 1$. The proposed controller for each agent is then
 \begin{equation}
     u_{i} = \dot{p_{i}} = \alpha \left(-k_{p}\left( p_i -C_{V_{i}} \right)\right) +
     \left( 1-\alpha \right)\left[-\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)  \right].
-    \label{eq:Combined Controller}
+    \label{eq:Combined LA+formation Controller}
 \end{equation}
 There are few interesting results regarding this controller.
 
 \begin{proposition}
-    Let us assume that there exists a Central Voronoi Tessellation (CVT), with $C_{V_{i}}$ such that $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$ (that is $C_{V_{i}}$ satisfy the formation controller constraint). Then, there exists an equilibrium such that $P_e = C_V$ (where $P_{e_i} = C_{V_{i}}$ and $C_V = \left[C_{V_1}, \ldots, C_{V_n} \right]$), which is locally asymptotic stable with (\ref{eq:Combined Controller}) dynamics.
+    Let us assume that there exists a Central Voronoi Tessellation (CVT), with $C_{V_{i}}$ such that $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$ (that is $C_{V_{i}}$ satisfy the formation controller constraint). Then, there exists an equilibrium such that $P_e = C_V$ (where $P_{e_i} = C_{V_{i}}$ and $C_V = \left[C_{V_1}, \ldots, C_{V_n} \right]$), which is locally asymptotically stable with (\ref{eq:Combined LA+formation Controller}) dynamics.
     \label{proposition 1}
 \end{proposition}
 
 \begin{proof}
-    First of all, let us show that $P_e = C_{V}$ is an equilibrium point of \eqref{eq:Combined Controller}.  Indeed, by assumption, we have $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$, so $\norm{p_{e_i} - p_{e_j}}^{2} = \norm{C_{V_{i}} - C_{V_{j}}}^{2} =d_{ij}^{2}$, showing $P_e = C_{V}$ is an equilibrium point. \br
+    First of all, let us show that $P_e = C_{V}$ is an equilibrium point of \eqref{eq:Combined LA+formation Controller}.  Indeed, by assumption, we have $\forall i \neq j, \norm{C_{V_{i}} - C_{V_{j}}}^{2} = d_{ij}^{2}$, so $\norm{p_{e_i} - p_{e_j}}^{2} = \norm{C_{V_{i}} - C_{V_{j}}}^{2} =d_{ij}^{2}$, showing $P_e = C_{V}$ is an equilibrium point. \br
 
     Now we are ready to prove that this equilibrium is stable. Let us choose a candidate Lyapunov function for the combined controller, which is a combination of the Lyapunov functions for each controller \cite{Cortes2004}: %\textcolor{red}{(what is the notation $\sigma(P)$ and $\sigma^t(P)$? be consistent and try not to introduce new notations for things already defined earlier)}
     \begin{equation}
@@ -544,11 +547,11 @@ For condition (3), the combined derivative of the combined Lyapunov function is 
     \begin{equation}
         \dot{V}_{C}(\zeta) = \alpha \left[ -2k_{p}\sum_{i=1}^{n}M_{V_{i}}\norm{p_{e_{i}} - C_{V_{i}}}^{2} \right] + (1-\alpha)\left[ -\sigma(P_e)^{T}R(P_e)R^{T}(P_e)\sigma(P_e) \right] \leq 0.
     \end{equation}
-    As we can see, this term is smaller \emph{or equal} to zero. Therefore, using Lyapunov method, this system is stable, however not asymptotically stable. That said, we can notice that the set $S = \left\{ P = C_{V} \right\}$ doesn't contain any trajectory apart from the trivial trajectory (when $\zeta = 0$), therefore by LaSalle principal, the system is Locally asymptotic stable.
+    As we can see, this term is smaller \emph{or equal} to zero. Therefore, using Lyapunov method, this system is stable, however not asymptotically stable. That said, we can notice that the set $S = \left\{ P = C_{V} \right\}$ doesn't contain any trajectory apart from the trivial trajectory (when $\zeta = 0$), therefore by LaSalle principal, the system is locally asymptotically stable.
 \end{proof}
 
 \begin{theorem}
-The dynamic system described by the controller (\ref{eq:Combined Controller}) asymptotically converges to a critical point of the function $G(p) = \alpha \mathcal{H}_{\mathcal{V}}(p) + (1-\alpha) F(p)$, where $F(p)$ is the distance-based formation controller (\ref{eq:distance formation controller})  potential, and $\mathcal{H}_{\mathcal{V}}(p)$ is the Voronoi-based deployment controller (\ref{eq:Lloyds continuous time control}) potential function\cite{Cortes2004}.
+The dynamic system described by the controller (\ref{eq:Combined LA+formation Controller}) asymptotically converges to a critical point of the function $G(p) = \alpha \mathcal{H}_{\mathcal{V}}(p) + (1-\alpha) F(p)$, where $F(p)$ is the distance-based formation controller (\ref{eq:distance formation controller})  potential, and $\mathcal{H}_{\mathcal{V}}(p)$ is the Voronoi-based deployment controller (\ref{eq:Lloyds continuous time control}) potential function\cite{Cortes2004}.
     \label{theorem: combined controller stability}
 \end{theorem}
 \begin{proof}
@@ -560,6 +563,24 @@ known that gradient flows converge to the critical points of the potential funct
 
 \begin{remark}As the combination of controllers provide some interesting results, it is very important to remember that it doesn't necessarily solves Problem \ref{GeneralProblem}. The reason is that the formation is changing the deployment, thus the condition for full area coverage might be broken. This work \emph{does not} provide a condition where the formation control holds \emph{and} Problem \ref{GeneralProblem} is fully solved.
 \end{remark}
+
+\subsubsection{Combining Distance-Based Formation Control and PLA}
+As (\ref{eq:PLA continuous time controller}) is also a locally asymptotically stable gradient system, it can also be combined with (\ref{eq:distance formation controller}), to achieve some spatial properties while maintaining coverage of $A_m$. Using a coefficient $0 \leq \alpha \leq 1$, the combined controller:
+\begin{equation}
+    u_{i} = \dot{p_{i}} = \alpha \left(-k_{p}\left( p_i -\textsc{proj}_{A_m}\left( C_{V_{i}} \right) \right)\right) +
+    \left( 1-\alpha \right)\left[-\sum_{i \sim j} \left( \norm{p_{i} - p_{j}}^{2} - d_{ij}^2 \right) \left( p_{i} - p_{j} \right)  \right].
+    \label{eq:Combined PLA+formation Controller}
+\end{equation}
+
+\begin{theorem}
+The dynamic system described by the controller (\ref{eq:Combined PLA+formation Controller}) asymptotically converges to a critical point of the function $G(p) = \alpha \mathcal{H}_{\mathcal{P}}(p) + (1-\alpha) F(p)$, where $F(p)$ is the distance-based formation controller (\ref{eq:distance formation controller})  potential, and $\mathcal{H}_{\mathcal{P}}(p)$ is the same as (\ref{eq:PLA potential function}.
+    \label{theorem: combined controller stability}
+\end{theorem}
+\begin{proof}
+Both the formation control and PLA can be expressed as a gradient dynamics system. It is
+known that gradient flows converge to the critical points of the potential function.
+\end{proof}
+
 \subsection{Simulations}
 
 \begin{figure}[H]
@@ -584,6 +605,9 @@ In Figure \ref{fig:results formation, PLA}, we can see a simulation for 3 agents
 The deployment problem under different constraints is a well known and researched problem. This work provides a new approach for partial coverage problem. When some sub-range should be covered constantly, this work presents a sequential coverage strategy, jumping between tiles. The Projected Lloyd's Algorithm, presented in this work, guarantees at least partial coverage of this sub range. Another contribution of this work is the combination of Lloyd's algorithm with a distance-based formation controller to achieve some spatial properties.
 
 As the PLA is calculated in a centralized way, future work might include decentralizing its calculation. Future work might also include a condition for formation and deployment solution while maintaining some deployment and/or formation properties, as well as combining other types of formation controllers. Decentralizing the PLA, together with finding this condition, can lead to some interesting results for autonomous, dynamically changed swarms.
+
+\section*{Acknowledgement}
+This work was supported in part by the Israeli Ministry of Defence (MAFAT).
 
 \bibliography{bibliography}
 \bibliographystyle{iacas}

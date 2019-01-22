@@ -12,5 +12,6 @@
 \BOOKMARK [3][-]{subsubsection.5.1.1}{Mathematical Background}{subsection.5.1}% 12
 \BOOKMARK [3][-]{subsubsection.5.1.2}{Distance-Based Formation Controller}{subsection.5.1}% 13
 \BOOKMARK [2][-]{subsection.5.2}{Combining Distance-Based Formation Control and Lloyd's Algorithm}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.3}{Simulations}{section.5}% 15
-\BOOKMARK [1][-]{section.6}{Concluding Remarks}{}% 16
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Combining Distance-Based Formation Control and PLA}{subsection.5.2}% 15
+\BOOKMARK [2][-]{subsection.5.3}{Simulations}{section.5}% 16
+\BOOKMARK [1][-]{section.6}{Concluding Remarks}{}% 17
